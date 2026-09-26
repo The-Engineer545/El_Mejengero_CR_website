@@ -1,0 +1,112 @@
+[
+    {
+        "id": 1,
+        "nombre": "Real Madrid",
+        "categoria": "clubes",
+        "descripcion": "Temporada 2026 · Local",
+        "precio": 18000,
+        "imagen": "img/productos/real-madrid.jpg",
+        "tallas": ["S", "M", "L", "XL"],
+        "playerVersion": true,
+        "disponible": true
+    },
+    {
+        "id": 2,
+        "nombre": "FC Barcelona",
+        "categoria": "clubes",
+        "descripcion": "Temporada 2026 · Local",
+        "precio": 18000,
+        "imagen": "img/productos/barcelona.jpg",
+        "tallas": ["S", "M", "L"],
+        "playerVersion": true,
+        "disponible": true
+    },
+    {
+        "id": 3,
+        "nombre": "AC Milan",
+        "categoria": "clubes",
+        "descripcion": "Temporada 2026 · Local",
+        "precio": 17000,
+        "imagen": "img/productos/ac-milan.jpg",
+        "tallas": ["M", "L", "XL"],
+        "playerVersion": false,
+        "disponible": true
+    },
+    {
+        "id": 4,
+        "nombre": "Costa Rica",
+        "categoria": "selecciones",
+        "descripcion": "Selección Nacional · Local",
+        "precio": 20000,
+        "imagen": "img/productos/costa-rica.jpg",
+        "tallas": ["M", "L", "XL"],
+        "playerVersion": true,
+        "disponible": true
+    },
+    {
+        "id": 5,
+        "nombre": "Argentina",
+        "categoria": "selecciones",
+        "descripcion": "Selección · Campeón del Mundo",
+        "precio": 19000,
+        "imagen": "img/productos/argentina.jpg",
+        "tallas": ["S", "M", "L"],
+        "playerVersion": true,
+        "disponible": true
+    },
+    {
+        "id": 6,
+        "nombre": "Brasil Retro",
+        "categoria": "retro",
+        "descripcion": "Edición Clásica · 1970",
+        "precio": 22000,
+        "imagen": "img/productos/brasil-retro.jpg",
+        "tallas": ["S", "M", "L"],
+        "playerVersion": false,
+        "disponible": true
+    },
+    {
+        "id": 7,
+        "nombre": "Italia Retro",
+        "categoria": "retro",
+        "descripcion": "Edición Clásica · 2006",
+        "precio": 22000,
+        "imagen": "img/productos/italia-retro.jpg",
+        "tallas": ["M", "L", "XL"],
+        "playerVersion": false,
+        "disponible": true
+    },
+    {
+        "id": 8,
+        "nombre": "Saprissa",
+        "categoria": "nacionales",
+        "descripcion": "Temporada 2026 · Local",
+        "precio": 15000,
+        "imagen": "img/productos/saprissa.jpg",
+        "tallas": ["S", "M", "L", "XL"],
+        "playerVersion": false,
+        "disponible": true
+    },
+    {
+        "id": 9,
+        "nombre": "Liga Deportiva Alajuelense",
+        "categoria": "nacionales",
+        "descripcion": "Temporada 2026 · Local",
+        "precio": 15000,
+        "imagen": "img/productos/lda.jpg",
+        "tallas": ["M", "L"],
+        "playerVersion": false,
+        "disponible": true
+    },
+    {
+        "id": 10,
+        "nombre": "Manchester City",
+        "categoria": "clubes",
+        "descripcion": "Temporada 2026 · Local",
+        "precio": 18000,
+        "imagen": "img/productos/man-city.jpg",
+        "tallas": ["S", "M", "L", "XL"],
+        "playerVersion": true,
+        "disponible": true
+    }
+]
