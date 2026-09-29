@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Mejenguero CR | Camisas de Fútbol</title>
+    <title>Producto | El Mejenguero CR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         #carrito { transition: opacity 0.3s ease; }
@@ -37,8 +37,8 @@
             </div>
 
             <nav aria-label="Navegación principal" class="flex items-center gap-4 text-sm font-bold">
-                <a href="index.html" aria-current="page" class="underline">Inicio</a>
-                <a href="catalogo.html" class="hover:underline">Catálogo</a>
+                <a href="index.html" class="hover:underline">Inicio</a>
+                <a href="catalogo.html" class="underline">Catálogo</a>
             </nav>
 
             <!-- Derecha: Carrito -->
@@ -79,29 +79,35 @@
         </aside>
 
         <!-- Contenido Principal -->
-        <main class="flex-1">
-            <!-- Hero Banner -->
-            <section class="relative bg-black text-white h-64 md:h-80 lg:h-96 flex items-center justify-center overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 z-10"></div>
-                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1000&auto=format&fit=crop"
-                    alt="Fútbol" class="absolute inset-0 w-full h-full object-cover opacity-50">
-                <div class="relative z-20 text-center px-4">
-                    <h1 class="text-3xl md:text-5xl font-black uppercase tracking-widest mb-4">Vístete de Pasión</h1>
-                    <p class="text-lg md:text-xl font-light max-w-2xl mx-auto mb-6">Las mejores camisetas del fútbol mundial. Versiones fan y player con envío a todo Costa Rica.</p>
-                    <a href="catalogo.html" class="inline-block bg-white text-black px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-gray-200 transition">Ver Catálogo</a>
-                </div>
-            </section>
+        <main class="flex-1 min-w-0 p-4 md:p-8">
+            <a id="volverCatalogo" href="catalogo.html" class="inline-block font-bold hover:underline mb-6">← Volver al catálogo</a>
+            <div id="estadoProducto" role="status" class="text-center text-gray-500 py-10">Cargando camiseta...</div>
+            <div id="detalleProducto" class="hidden bg-white rounded-2xl shadow-2xl w-full max-w-4xl mx-auto overflow-hidden flex flex-col md:flex-row relative">
 
-            <!-- Catálogo -->
-            <section id="destacados" class="p-4 md:p-8 scroll-mt-24">
-                <div class="flex justify-between items-end mb-6 border-b border-gray-200 pb-4">
-                    <h2 class="text-2xl font-black uppercase">Productos destacados</h2>
-                    <a href="catalogo.html" class="text-sm font-bold hover:underline">Ver todo el catálogo →</a>
+                <div class="w-full md:w-1/2 bg-gray-100 flex items-center justify-center p-8">
+                    <img id="productoImagen" alt="Producto"
+                        class="w-full h-auto max-h-[60vh] object-contain mix-blend-multiply">
                 </div>
-                <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <p class="col-span-full text-center text-gray-500 py-10">Cargando productos...</p>
+
+                <div class="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
+                    <span id="productoCategoria"
+                        class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold uppercase self-start mb-3">Categoría</span>
+                    <h1 id="productoTitulo" class="text-3xl font-black leading-tight mb-2">Nombre</h1>
+                    <p id="productoDescripcion" class="text-gray-500 text-sm mb-6">Descripción</p>
+                    <p id="productoPrecio" class="text-4xl font-black text-black mb-8">₡0</p>
+
+                    <div class="mb-8">
+                        <label for="productoTalla" class="text-xs text-gray-500 font-bold uppercase mb-2 block">Selecciona tu talla:</label>
+                        <select id="productoTalla"
+                            class="w-full border-gray-300 rounded-lg text-lg p-3 bg-gray-50 border focus:outline-none focus:ring-2 focus:ring-black"></select>
+                    </div>
+
+                    <button id="productoBtnAgregar" disabled
+                        class="w-full bg-black text-white py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition">
+                        Agregar al Carrito
+                    </button>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
 
@@ -208,6 +214,6 @@
     <!-- Funciones compartidas y lógica de esta página -->
     <script src="js/app.js"></script>
     <script src="js/productos.js"></script>
-    <script src="js/inicio.js"></script>
+    <script src="js/producto.js"></script>
 </body>
 </html>
