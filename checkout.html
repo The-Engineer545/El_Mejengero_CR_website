@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Inicio | El Mejengero CR</title>
+    <title>Finalizar pedido | El Mejengero CR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/estilos.css" />
     <script src="js/app.js" defer></script>
   </head>
-  <body data-pagina="index" class="bg-gray-50 text-gray-900">
+  <body data-pagina="checkout" class="bg-gray-50 text-gray-900">
     <a href="#contenido" class="salto">Saltar al contenido</a>
     <header
       class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm"
@@ -155,41 +155,102 @@
     </nav>
     <main id="contenido" class="max-w-7xl mx-auto px-4 lg:px-8 py-10">
       <p id="avisoGeneral" role="status" hidden class="panel mb-4"></p>
-      <section id="inicio" class="mb-16 mt-6">
-        <div
-          class="bg-white p-8 lg:p-12 rounded-3xl shadow-sm border border-gray-200 text-center relative overflow-hidden"
-        >
-          <span
-            class="bg-black text-white text-xs font-bold uppercase px-4 py-2 rounded-full relative z-10"
-            >Colección 2026</span
+      <h1 class="text-3xl font-black mb-6">Finalizar pedido</h1>
+      <p id="estadoProductos" role="status">Cargando resumen…</p>
+      <div id="resumenPedido" class="panel mb-6"></div>
+      <form id="formularioPedido" hidden class="panel space-y-6">
+        <fieldset>
+          <legend class="text-xl font-bold mb-4">Datos de contacto</legend>
+          <div class="grid sm:grid-cols-2 gap-4">
+            <label
+              >Nombre completo<input
+                name="nombre"
+                autocomplete="name"
+                required
+                maxlength="100" /></label
+            ><label
+              >Teléfono (8 dígitos)<input
+                name="telefono"
+                autocomplete="tel"
+                type="tel"
+                inputmode="numeric"
+                pattern="[0-9]{8}"
+                required
+                maxlength="8"
+                title="Escribí 8 dígitos, sin espacios ni guiones."
+            /></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="text-xl font-bold mb-4">Tipo de entrega</legend>
+          <label
+            >Elegí una opción<select name="entrega" id="tipoEntrega">
+              <option value="personal">
+                Entrega personal: Nicoya o Santa Cruz
+              </option>
+              <option value="correos">Correos de Costa Rica</option>
+            </select></label
           >
-          <h2 class="text-4xl lg:text-5xl font-black mt-6 mb-4 relative z-10">
-            Camisas de fútbol con estilo.
-          </h2>
-          <p class="text-gray-500 mb-8 max-w-xl mx-auto relative z-10">
-            Elegí a tu equipo favorito. Pagá seguro por SINPE Móvil y recibí tu
-            pedido en cualquier parte de Costa Rica.
+          <div id="datosPersonal" class="mt-4">
+            <label
+              >Lugar de entrega<select name="lugar">
+                <option>Nicoya</option>
+                <option>Santa Cruz</option>
+              </select></label
+            >
+          </div>
+          <fieldset
+            id="datosCorreos"
+            hidden
+            disabled
+            class="grid sm:grid-cols-2 gap-4 mt-4"
+          >
+            <legend>Datos del envío</legend>
+            <label
+              >Cédula o identificación<input
+                name="cedula"
+                required
+                pattern="[0-9]{9,12}"
+                maxlength="12"
+                inputmode="numeric"
+                title="Ingresá entre 9 y 12 dígitos, sin guiones." /></label
+            ><label
+              >Provincia<input
+                name="provincia"
+                required
+                maxlength="60" /></label
+            ><label>Cantón<input name="canton" required maxlength="60" /></label
+            ><label
+              >Distrito<input name="distrito" required maxlength="60" /></label
+            ><label class="sm:col-span-2"
+              >Dirección exacta o sucursal más cercana<textarea
+                name="direccion"
+                required
+                maxlength="500"
+              ></textarea>
+            </label>
+          </fieldset>
+        </fieldset>
+        <fieldset>
+          <legend class="text-xl font-bold mb-4">Forma de pago</legend>
+          <label
+            ><input type="radio" name="pago" value="SINPE Móvil" checked />
+            SINPE Móvil</label
+          >
+          <p class="mt-3">
+            Enviar comprobante al 6342-5133 para procesar su compra.
           </p>
-          <a
-            href="catalogo.html"
-            class="inline-block bg-black text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition relative z-10"
-            >Ver Catálogo</a
+          <label class="mt-4 text-gray-500"
+            ><input type="radio" disabled /> Visa / Mastercard —
+            próximamente</label
           >
-        </div>
-      </section>
-      <section aria-labelledby="tituloDestacados">
-        <h2 id="tituloDestacados" class="text-3xl font-black">
-          Productos destacados
-        </h2>
-        <p id="estadoProductos" role="status">Cargando productos…</p>
-        <div
-          id="listaProductos"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
-        ></div>
-        <a class="enlace inline-block mt-6" href="catalogo.html"
-          >Ver todo el catálogo →</a
-        >
-      </section>
+        </fieldset>
+        <p>
+          Al continuar, WhatsApp abrirá el resumen para que revisés y enviés tu
+          pedido. La tienda confirmará disponibilidad, entrega y pago.
+        </p>
+        <button type="submit" class="boton">Revisar pedido en WhatsApp</button>
+      </form>
       <noscript
         >Activá JavaScript para consultar productos y realizar tu
         pedido.</noscript

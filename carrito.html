@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Inicio | El Mejengero CR</title>
+    <title>Carrito | El Mejengero CR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/estilos.css" />
     <script src="js/app.js" defer></script>
   </head>
-  <body data-pagina="index" class="bg-gray-50 text-gray-900">
+  <body data-pagina="carrito" class="bg-gray-50 text-gray-900">
     <a href="#contenido" class="salto">Saltar al contenido</a>
     <header
       class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm"
@@ -155,42 +155,19 @@
     </nav>
     <main id="contenido" class="max-w-7xl mx-auto px-4 lg:px-8 py-10">
       <p id="avisoGeneral" role="status" hidden class="panel mb-4"></p>
-      <section id="inicio" class="mb-16 mt-6">
-        <div
-          class="bg-white p-8 lg:p-12 rounded-3xl shadow-sm border border-gray-200 text-center relative overflow-hidden"
-        >
-          <span
-            class="bg-black text-white text-xs font-bold uppercase px-4 py-2 rounded-full relative z-10"
-            >Colección 2026</span
-          >
-          <h2 class="text-4xl lg:text-5xl font-black mt-6 mb-4 relative z-10">
-            Camisas de fútbol con estilo.
-          </h2>
-          <p class="text-gray-500 mb-8 max-w-xl mx-auto relative z-10">
-            Elegí a tu equipo favorito. Pagá seguro por SINPE Móvil y recibí tu
-            pedido en cualquier parte de Costa Rica.
-          </p>
-          <a
-            href="catalogo.html"
-            class="inline-block bg-black text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition relative z-10"
-            >Ver Catálogo</a
-          >
-        </div>
+      <h1 class="text-3xl font-black mb-6">Tu carrito</h1>
+      <p id="estadoProductos" role="status">Cargando carrito…</p>
+      <div id="listaCarrito" class="space-y-4"></div>
+      <section id="resumenCarrito" hidden class="panel mt-6">
+        <p class="text-xl font-bold">
+          Subtotal: <span id="subtotalCarrito"></span>
+        </p>
+        <p class="my-4">El costo de entrega se coordina con la tienda.</p>
+        <a href="checkout.html" class="boton">Finalizar pedido</a>
       </section>
-      <section aria-labelledby="tituloDestacados">
-        <h2 id="tituloDestacados" class="text-3xl font-black">
-          Productos destacados
-        </h2>
-        <p id="estadoProductos" role="status">Cargando productos…</p>
-        <div
-          id="listaProductos"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
-        ></div>
-        <a class="enlace inline-block mt-6" href="catalogo.html"
-          >Ver todo el catálogo →</a
-        >
-      </section>
-      <noscript
+      <a class="enlace inline-block mt-6" href="catalogo.html"
+        >Seguir comprando</a
+      ><noscript
         >Activá JavaScript para consultar productos y realizar tu
         pedido.</noscript
       >

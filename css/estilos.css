@@ -1,0 +1,90 @@
+[hidden] {
+  display: none !important;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+.panel {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+.boton,
+.boton-secundario,
+.filtro {
+  display: inline-block;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.75rem;
+  border: 1px solid #111;
+  font-weight: 700;
+  text-align: center;
+}
+.boton,
+.filtro[aria-current] {
+  background: #111;
+  color: white;
+}
+.boton-secundario,
+.filtro {
+  background: white;
+  color: #111;
+}
+.enlace {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+label {
+  display: block;
+}
+input:not([type="radio"]),
+select,
+textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.65rem;
+  margin-top: 0.4rem;
+  border: 1px solid #9ca3af;
+  border-radius: 0.5rem;
+}
+input[type="radio"] {
+  margin-right: 0.5rem;
+}
+fieldset {
+  min-width: 0;
+}
+dialog::backdrop {
+  background: #0008;
+}
+.salto {
+  position: absolute;
+  left: -9999px;
+}
+.salto:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  background: white;
+  padding: 1rem;
+}
