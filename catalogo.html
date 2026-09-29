@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Mejenguero CR | Camisas de Fútbol</title>
+    <title>Catálogo | El Mejenguero CR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         #carrito { transition: opacity 0.3s ease; }
@@ -37,8 +37,8 @@
             </div>
 
             <nav aria-label="Navegación principal" class="flex items-center gap-4 text-sm font-bold">
-                <a href="index.html" aria-current="page" class="underline">Inicio</a>
-                <a href="catalogo.html" class="hover:underline">Catálogo</a>
+                <a href="index.html" class="hover:underline">Inicio</a>
+                <a href="catalogo.html" aria-current="page" class="underline">Catálogo</a>
             </nav>
 
             <!-- Derecha: Carrito -->
@@ -80,24 +80,16 @@
 
         <!-- Contenido Principal -->
         <main class="flex-1">
-            <!-- Hero Banner -->
-            <section class="relative bg-black text-white h-64 md:h-80 lg:h-96 flex items-center justify-center overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 z-10"></div>
-                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1000&auto=format&fit=crop"
-                    alt="Fútbol" class="absolute inset-0 w-full h-full object-cover opacity-50">
-                <div class="relative z-20 text-center px-4">
-                    <h1 class="text-3xl md:text-5xl font-black uppercase tracking-widest mb-4">Vístete de Pasión</h1>
-                    <p class="text-lg md:text-xl font-light max-w-2xl mx-auto mb-6">Las mejores camisetas del fútbol mundial. Versiones fan y player con envío a todo Costa Rica.</p>
-                    <a href="catalogo.html" class="inline-block bg-white text-black px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-gray-200 transition">Ver Catálogo</a>
-                </div>
-            </section>
-
             <!-- Catálogo -->
-            <section id="destacados" class="p-4 md:p-8 scroll-mt-24">
+            <section id="catalogo" class="p-4 md:p-8 scroll-mt-24">
                 <div class="flex justify-between items-end mb-6 border-b border-gray-200 pb-4">
-                    <h2 class="text-2xl font-black uppercase">Productos destacados</h2>
-                    <a href="catalogo.html" class="text-sm font-bold hover:underline">Ver todo el catálogo →</a>
+                    <h1 class="text-2xl font-black uppercase">Catálogo</h1>
                 </div>
+                <form id="formBusqueda" action="catalogo.html" method="get" role="search" class="mb-6 max-w-lg">
+                    <label for="buscadorProductos" class="block text-sm font-bold mb-2">Buscar camisetas</label>
+                    <input type="search" id="buscadorProductos" name="q" placeholder="Buscar equipos, selecciones..."
+                        class="w-full bg-white border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-black text-sm">
+                </form>
                 <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     <p class="col-span-full text-center text-gray-500 py-10">Cargando productos...</p>
                 </div>
@@ -208,6 +200,6 @@
     <!-- Funciones compartidas y lógica de esta página -->
     <script src="js/app.js"></script>
     <script src="js/productos.js"></script>
-    <script src="js/inicio.js"></script>
+    <script src="js/catalogo.js"></script>
 </body>
 </html>
