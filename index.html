@@ -1,368 +1,249 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>El Mejengero CR | Camisas de Fútbol</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Mejenguero CR | Camisas de Fútbol</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
+    <style>
+        #carrito { transition: opacity 0.3s ease; }
+    </style>
+</head>
 
-  <body class="bg-gray-50 text-gray-900">
+<body class="bg-gray-50 text-gray-900 font-sans">
+
     <!-- Header -->
-    <header
-      class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm"
-    >
-      <div class="w-full flex items-center justify-between pl-3 pr-8 py-4">
-        <!-- Izquierda: Botón Menú + Logo -->
-        <div class="flex items-center gap-2">
-          <button
-            type="button"
-            id="btnHamburguesa"
-            class="flex items-center justify-center h-10 w-10 rounded-full hover:bg-gray-100 transition text-black"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+    <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+        <div class="w-full flex items-center justify-between px-4 lg:px-8 py-4">
 
-          <a href="#inicio" class="flex items-center gap-1.5">
-            <div
-              class="h-10 w-10 flex items-center justify-center rounded-full bg-black text-white font-bold text-lg"
-            >
-              EM
+            <!-- Izquierda: Botón Menú + Logo -->
+            <div class="flex items-center gap-4">
+                <button type="button" id="btnHamburguesa"
+                    class="flex items-center justify-center h-10 w-10 rounded-full hover:bg-gray-100 transition text-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                <a href="#" class="flex items-center gap-2">
+                    <div class="h-10 w-10 flex items-center justify-center rounded-full bg-black text-white font-bold text-lg">EM</div>
+                    <div class="hidden sm:block">
+                        <h1 class="font-black uppercase tracking-widest text-lg leading-tight">El Mejenguero</h1>
+                        <p class="text-xs text-gray-400 font-semibold tracking-wider">CR STORE</p>
+                    </div>
+                </a>
             </div>
-            <div class="hidden sm:block">
-              <h1
-                class="font-black uppercase tracking-widest text-lg leading-tight"
-              >
-                El Mejengero
-              </h1>
-              <p class="text-xs text-gray-400 font-semibold tracking-wider">
-                CR • STORE
-              </p>
+
+            <!-- Centro: Búsqueda -->
+            <div class="hidden md:flex flex-1 max-w-md mx-8">
+                <div class="relative w-full">
+                    <input type="text" id="buscadorProductos" placeholder="Buscar equipos, selecciones..."
+                        class="w-full bg-gray-100 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-black text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-4 top-2.5 text-gray-400"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
             </div>
-          </a>
+
+            <!-- Derecha: Carrito -->
+            <div class="flex items-center gap-4 sm:gap-6">
+                <button id="btnCarrito" aria-label="Carrito"
+                    class="text-gray-500 hover:text-black transition relative p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+                    <span id="contadorCarrito" style="display: none;"
+                        class="absolute top-0 right-0 bg-red-600 text-white text-[10px] font-bold h-5 w-5 items-center justify-center rounded-full">0</span>
+                </button>
+            </div>
         </div>
-
-        <!-- Derecha: Iconos de acción -->
-        <div class="flex items-center gap-4 sm:gap-6">
-          <button
-            id="btnUsuario"
-            aria-label="Usuario"
-            class="text-gray-500 hover:text-black transition"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-              />
-            </svg>
-          </button>
-
-          <button
-            id="btnFavoritos"
-            aria-label="Lista de Deseos"
-            class="text-gray-500 hover:text-black transition"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-              />
-            </svg>
-          </button>
-
-          <button
-            id="btnCarrito"
-            aria-label="Carrito"
-            class="text-gray-500 hover:text-black transition relative"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-              />
-            </svg>
-            <span
-              id="contadorCarrito"
-              class="absolute -top-1 -right-2 bg-black text-white text-xs font-bold h-5 w-5 flex items-center justify-center rounded-full"
-              >0</span
-            >
-          </button>
-        </div>
-      </div>
     </header>
 
     <!-- Layout Principal -->
     <div class="flex flex-col md:flex-row w-full relative">
-      <!-- Sidebar de Categorías -->
-      <aside
-        id="sidebarMenu"
-        class="hidden w-full md:w-64 bg-white border-r border-gray-200 shrink-0 md:sticky md:top-20 md:h-screen overflow-y-auto p-4 lg:p-6 flex-col justify-between z-20"
-      >
-        <div class="space-y-6">
-          <div>
-            <span
-              class="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-3"
-              >Explorar Categorías</span
-            >
 
-            <nav class="flex flex-col space-y-1">
-              <a
-                href="#"
-                class="flex items-center justify-between px-3 py-2 text-sm font-bold uppercase tracking-wide text-black bg-gray-100 border-l-4 border-black transition-colors"
-              >
-                <span>Clubes Nacionales</span>
-                <span class="text-xs bg-black text-white px-2 py-0.5 rounded"
-                  >HOT</span
-                >
-              </a>
-              <a
-                href="#"
-                class="flex items-center justify-between px-3 py-2 text-sm font-bold uppercase tracking-wide text-gray-500 hover:text-black hover:bg-gray-50 border-l-4 border-transparent hover:border-gray-300 transition-colors"
-              >
-                <span>Internacionales</span>
-                <span class="text-lg leading-none">›</span>
-              </a>
-              <a
-                href="#"
-                class="flex items-center justify-between px-3 py-2 text-sm font-bold uppercase tracking-wide text-gray-500 hover:text-black hover:bg-gray-50 border-l-4 border-transparent hover:border-gray-300 transition-colors"
-              >
-                <span>Selecciones</span>
-                <span class="text-lg leading-none">›</span>
-              </a>
-              <a
-                href="#"
-                class="flex items-center justify-between px-3 py-2 text-sm font-bold uppercase tracking-wide text-gray-500 hover:text-black hover:bg-gray-50 border-l-4 border-transparent hover:border-gray-300 transition-colors"
-              >
-                <span>Ediciones Especiales</span>
-                <span class="text-xs text-gray-400 font-bold">PRO</span>
-              </a>
-              <a
-                href="#"
-                class="flex items-center justify-between px-3 py-2 text-sm font-bold uppercase tracking-wide text-gray-500 hover:text-black hover:bg-gray-50 border-l-4 border-transparent hover:border-gray-300 transition-colors"
-              >
-                <span>Retro</span>
-                <span class="text-lg leading-none">↺</span>
-              </a>
-            </nav>
-          </div>
-        </div>
-      </aside>
+        <!-- Sidebar Categorías (oculto por defecto, controlado por JS) -->
+        <aside id="sidebarMenu"
+            class="hidden w-full md:w-64 bg-white border-r border-gray-200 shrink-0 md:sticky md:top-[73px] md:h-[calc(100vh-73px)] overflow-y-auto p-6 flex-col z-20">
+            <h2 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-4">Categorías</h2>
+            <ul class="space-y-3 font-medium text-gray-700">
+                <li><button data-categoria="todas"
+                        class="btn-categoria font-bold text-black hover:text-black hover:font-bold transition block text-left w-full">Todas / Novedades</button></li>
+                <li><button data-categoria="nacionales"
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Nacionales</button></li>
+                <li><button data-categoria="selecciones"
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Selecciones</button></li>
+                <li><button data-categoria="clubes"
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Clubes Europeos</button></li>
+                <li><button data-categoria="retro"
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Retro / Clásicas</button></li>
+            </ul>
+        </aside>
 
-      <!-- Contenido principal -->
-      <main class="flex-1 px-4 lg:px-8 py-10 w-full overflow-hidden">
-        <!-- Hero Banner -->
-        <section id="inicio" class="mb-16 mt-6">
-          <div
-            class="bg-white p-8 lg:p-12 rounded-3xl shadow-sm border border-gray-200 text-center relative overflow-hidden"
-          >
-            <span
-              class="bg-black text-white text-xs font-bold uppercase px-4 py-2 rounded-full relative z-10"
-              >Colección 2026</span
-            >
-            <h2 class="text-4xl lg:text-5xl font-black mt-6 mb-4 relative z-10">
-              Camisas de fútbol con estilo.
-            </h2>
-            <p class="text-gray-500 mb-8 max-w-xl mx-auto relative z-10">
-              Elegí a tu equipo favorito. Pagá seguro por SINPE Móvil y recibí
-              tu pedido en cualquier parte de Costa Rica.
-            </p>
-            <a
-              href="#catalogo"
-              class="inline-block bg-black text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition relative z-10"
-              >Ver Catálogo</a
-            >
-          </div>
-        </section>
+        <!-- Contenido Principal -->
+        <main class="flex-1">
+            <!-- Hero Banner -->
+            <section class="relative bg-black text-white h-64 md:h-80 lg:h-96 flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 z-10"></div>
+                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1000&auto=format&fit=crop"
+                    alt="Fútbol" class="absolute inset-0 w-full h-full object-cover opacity-50">
+                <div class="relative z-20 text-center px-4">
+                    <h2 class="text-3xl md:text-5xl font-black uppercase tracking-widest mb-4">Vístete de Pasión</h2>
+                    <p class="text-lg md:text-xl font-light max-w-2xl mx-auto mb-6">Las mejores camisetas del fútbol mundial. Versiones fan y player con envío a todo Costa Rica.</p>
+                    <button class="bg-white text-black px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-gray-200 transition">Ver Catálogo</button>
+                </div>
+            </section>
 
-        <!-- Catálogo -->
-        <section id="catalogo" class="mb-20">
-          <div
-            class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4"
-          >
-            <div>
-              <h2 class="text-3xl font-black mb-2">Nuestro Catálogo</h2>
-              <p class="text-gray-500">Filtrá por liga o selección.</p>
-            </div>
-
-            <!-- Botones de Filtro Rápido -->
-            <div class="flex flex-wrap gap-2">
-              <button
-                class="bg-black text-white px-4 py-2 rounded-full text-sm font-bold border border-black"
-              >
-                Todos
-              </button>
-              <button
-                class="bg-white text-gray-600 px-4 py-2 rounded-full text-sm font-bold border border-gray-300 hover:border-black transition"
-              >
-                Clubes
-              </button>
-              <button
-                class="bg-white text-gray-600 px-4 py-2 rounded-full text-sm font-bold border border-gray-300 hover:border-black transition"
-              >
-                Selecciones
-              </button>
-            </div>
-          </div>
-
-          <!-- Lista de Productos  -->
-          <div
-            id="listaProductos"
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <!-- Dinámico -->
-          </div>
-        </section>
-      </main>
+            <!-- Catálogo -->
+            <section class="p-4 md:p-8">
+                <div class="flex justify-between items-end mb-6 border-b border-gray-200 pb-4">
+                    <h2 class="text-2xl font-black uppercase">Últimos Ingresos</h2>
+                </div>
+                <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <p class="col-span-full text-center text-gray-500 py-10">Cargando productos...</p>
+                </div>
+            </section>
+        </main>
     </div>
 
     <!-- Footer -->
     <footer class="bg-black text-white py-12 mt-10">
-      <div
-        class="w-full px-4 lg:px-8 flex flex-col md:flex-row justify-between gap-8"
-      >
-        <div class="md:w-1/3">
-          <h3 class="text-xl font-black uppercase tracking-widest mb-4">
-            El Mejengero CR
-          </h3>
-          <p class="text-gray-400 text-sm">
-            Las mejores camisas de fútbol en Costa Rica. Calidad garantizada,
-            pagos seguros por SINPE Móvil y envíos a todo el país.
-          </p>
+        <div class="w-full px-4 lg:px-8 flex flex-col md:flex-row justify-between gap-8 max-w-7xl mx-auto">
+            <div class="md:w-1/3">
+                <h3 class="text-xl font-black uppercase tracking-widest mb-4">El Mejenguero CR</h3>
+                <p class="text-gray-400 text-sm">Las mejores camisas de fútbol en Costa Rica. Calidad garantizada, pagos seguros por SINPE Móvil y envíos a todo el país.</p>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">Contacto</h4>
+                <ul class="text-gray-400 text-sm space-y-2">
+                    <li class="flex items-center gap-2">📍 Nicoya, Guanacaste</li>
+                    <li class="flex items-center gap-2">📞 +506 6342 5133</li>
+                    <li class="flex items-center gap-2">💳 Pagos vía SINPE</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">Síguenos</h4>
+                <div class="flex gap-4">
+                    <a href="https://instagram.com/elmejenguero_cr" target="_blank" class="text-gray-400 hover:text-white transition">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <div>
-          <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">
-            Contacto
-          </h4>
-          <ul class="text-gray-400 text-sm space-y-2">
-            <li class="flex items-center gap-2">
-              <span>📍</span> Nicoya, Guanacaste
-            </li>
-            <li class="flex items-center gap-2">
-              <span>📱</span> +506 8898 0038
-            </li>
-            <li class="flex items-center gap-2">
-              <span>💳</span> Pagos vía SINPE
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">
-            Síguenos
-          </h4>
-          <div class="flex gap-4">
-            <a href="#" class="text-gray-400 hover:text-white transition"
-              ><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
-                /></svg
-            ></a>
-            <a href="#" class="text-gray-400 hover:text-white transition"
-              ><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
-                /></svg
-            ></a>
-            <a href="#" class="text-gray-400 hover:text-white transition"
-              ><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.12-3.44-3.13-3.69-5.46-.22-2.14.48-4.27 1.88-5.84 1.25-1.4 3.01-2.28 4.9-2.43.01 1.44 0 2.89.02 4.33-.82.11-1.57.57-2.08 1.2-.55.7-.75 1.63-.58 2.5.18.91.73 1.7 1.49 2.15.82.49 1.83.58 2.73.27 1.05-.38 1.78-1.35 1.88-2.46.03-2.73.02-5.47.02-8.21.01-3.08-.01-6.17.02-9.25z"
-                /></svg
-            ></a>
-          </div>
-        </div>
-      </div>
     </footer>
 
-    <!-- Modal Carrito -->
-    <div
-      id="carrito"
-      class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
-    >
-      <div class="bg-white w-full max-w-md h-full shadow-2xl p-6 flex flex-col">
-        <div class="flex justify-between items-center border-b pb-4">
-          <h2 class="text-2xl font-black">Tu Carrito</h2>
-          <button
-            id="cerrarCarrito"
-            class="text-gray-500 hover:text-black font-bold text-xl"
-          >
-            X
-          </button>
+    <!-- Modal: Carrito -->
+    <div id="carrito" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-end">
+        <div class="bg-white w-full max-w-md h-full shadow-2xl p-6 flex flex-col">
+            <div class="flex justify-between items-center border-b pb-4">
+                <h2 class="text-2xl font-black">Tu Carrito</h2>
+                <button id="cerrarCarrito" class="text-gray-500 hover:text-black font-bold text-2xl px-2">&times;</button>
+            </div>
+            <div id="carrito-items" class="flex-1 overflow-y-auto py-4 space-y-4"></div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-gray-600 font-bold">Total:</span>
+                    <span id="carrito-total" class="text-2xl font-black text-black">₡0</span>
+                </div>
+                <button id="btnCheckout" disabled
+                    class="w-full bg-black text-white py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition opacity-50 cursor-not-allowed">
+                    Finalizar Compra
+                </button>
+            </div>
         </div>
+    </div>
 
-        <div class="flex-1 overflow-y-auto py-4">
-          <p class="text-gray-500 text-center mt-10">
-            El carrito está vacío por ahora.
-          </p>
-        </div>
+    <!-- Modal: Checkout con validación Regex (TAREA DARÍO) -->
+    <div id="modalCheckout" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative">
+            <button id="cerrarModalCheckout"
+                class="absolute top-4 right-4 bg-gray-200 text-black hover:bg-red-500 hover:text-white rounded-full w-8 h-8 flex items-center justify-center font-bold transition">&times;</button>
 
-        <div class="border-t pt-4">
-          <button
-            class="w-full bg-black text-white py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition"
-          >
-            Finalizar Compra
-          </button>
+            <h2 class="text-2xl font-black mb-1">Datos del Comprador</h2>
+            <p class="text-gray-500 text-sm mb-6">Completa tus datos para finalizar el pedido por WhatsApp.</p>
+
+            <form id="formCheckout" novalidate class="space-y-5">
+                <!-- Nombre -->
+                <div>
+                    <label for="inputNombre" class="block text-xs font-bold uppercase text-gray-500 mb-1">Nombre completo</label>
+                    <input type="text" id="inputNombre" required placeholder="Ej: Juan Pérez"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
+                </div>
+
+                <!-- Cédula (Regex: 9 dígitos) -->
+                <div>
+                    <label for="inputCedula" class="block text-xs font-bold uppercase text-gray-500 mb-1">Cédula (9 dígitos)</label>
+                    <input type="text" id="inputCedula" required maxlength="9" placeholder="Ej: 123456789"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
+                    <p id="errorCedula" class="text-red-500 text-xs mt-1 font-semibold"></p>
+                </div>
+
+                <!-- Teléfono (Regex: 8 dígitos) -->
+                <div>
+                    <label for="inputTelefono" class="block text-xs font-bold uppercase text-gray-500 mb-1">Teléfono CR (8 dígitos)</label>
+                    <input type="text" id="inputTelefono" required maxlength="8" placeholder="Ej: 63425133"
+                        class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
+                    <p id="errorTelefono" class="text-red-500 text-xs mt-1 font-semibold"></p>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-black text-white py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition">
+                    Enviar Pedido por WhatsApp 📲
+                </button>
+            </form>
         </div>
-      </div>
+    </div>
+
+    <!-- Modal: Vista Rápida del Producto -->
+    <div id="modalProducto" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col md:flex-row relative">
+            <button id="cerrarModalProducto"
+                class="absolute top-4 right-4 bg-gray-200 text-black hover:bg-red-500 hover:text-white rounded-full w-8 h-8 flex items-center justify-center font-bold z-10 transition">&times;</button>
+
+            <div class="w-full md:w-1/2 bg-gray-100 flex items-center justify-center p-8">
+                <img id="modalImagen" src="" alt="Producto"
+                    class="w-full h-auto max-h-[60vh] object-contain mix-blend-multiply">
+            </div>
+
+            <div class="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
+                <span id="modalCategoria"
+                    class="bg-black text-white px-3 py-1 rounded-full text-xs font-bold uppercase self-start mb-3">Categoría</span>
+                <h2 id="modalTitulo" class="text-3xl font-black leading-tight mb-2">Nombre</h2>
+                <p id="modalDescripcion" class="text-gray-500 text-sm mb-6">Descripción</p>
+                <p id="modalPrecio" class="text-4xl font-black text-black mb-8">₡0</p>
+
+                <div class="mb-8">
+                    <label class="text-xs text-gray-500 font-bold uppercase mb-2 block">Selecciona tu talla:</label>
+                    <select id="modalTalla"
+                        class="w-full border-gray-300 rounded-lg text-lg p-3 bg-gray-50 border focus:outline-none focus:ring-2 focus:ring-black"></select>
+                </div>
+
+                <button id="modalBtnAgregar"
+                    class="w-full bg-black text-white py-4 rounded-full font-bold uppercase tracking-widest hover:bg-gray-800 transition">
+                    Agregar al Carrito
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- Botón Flotante WhatsApp -->
-    <a
-      href="https://wa.me/50688980038?text=Hola,%20vengo%20de%20la%20página%20de%20El%20Mejengero%20CR%20y%20me%20gustaría%20hacer%20una%20consulta."
-      target="_blank"
-      class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-3 md:p-4 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-8 h-8"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
-        />
-      </svg>
+    <a href="https://wa.me/50663425133?text=Hola,%20vengo%20de%20la%20página%20web%20y%20tengo%20una%20consulta."
+        target="_blank"
+        class="fixed bottom-6 right-6 z-40 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+        </svg>
     </a>
 
-    <!-- Script de aplicación -->
+    <!-- Solo app.js — productos.js eliminado -->
     <script src="js/app.js"></script>
-  </body>
+</body>
 </html>
