@@ -5,7 +5,7 @@
     "descripcion": "Camiseta Argentina 2022 Campeon del Mundo",
     "precio": 25000,
     "categoria": "Selecciones",
-    "imagen": "img/productos/argentina.webp"
+    "imagen": "img/productos/argentina.jpg"
   },
   {
     "id": 2,
@@ -32,7 +32,7 @@
     "categoria": "Clubes",
     "descripcion": "Camiseta del Milan Temporada 2026 · Local",
     "precio": 17000,
-    "imagen": "img/productos/ac-milan.jpeg",
+    "imagen": "img/productos/ac-milan.jpg",
     "tallas": ["M", "L", "XL"],
     "playerVersion": false,
     "disponible": true
@@ -43,7 +43,7 @@
     "categoria": "Selecciones",
     "descripcion": "Selección Nacional · Local",
     "precio": 18000,
-    "imagen": "img/productos/costa-rica.avif",
+    "imagen": "img/productos/costa-rica.jpg",
     "tallas": ["S", "M", "L", "XL"],
     "playerVersion": true,
     "disponible": true
