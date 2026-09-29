@@ -96,12 +96,12 @@
                 <div class="relative z-20 text-center px-4">
                     <h2 class="text-3xl md:text-5xl font-black uppercase tracking-widest mb-4">Vístete de Pasión</h2>
                     <p class="text-lg md:text-xl font-light max-w-2xl mx-auto mb-6">Las mejores camisetas del fútbol mundial. Versiones fan y player con envío a todo Costa Rica.</p>
-                    <button class="bg-white text-black px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-gray-200 transition">Ver Catálogo</button>
+                    <a href="#catalogo" class="inline-block bg-white text-black px-8 py-3 rounded-full font-bold uppercase tracking-wide hover:bg-gray-200 transition">Ver Catálogo</a>
                 </div>
             </section>
 
             <!-- Catálogo -->
-            <section class="p-4 md:p-8">
+            <section id="catalogo" class="p-4 md:p-8 scroll-mt-24">
                 <div class="flex justify-between items-end mb-6 border-b border-gray-200 pb-4">
                     <h2 class="text-2xl font-black uppercase">Últimos Ingresos</h2>
                 </div>
@@ -174,8 +174,9 @@
                 <!-- Nombre -->
                 <div>
                     <label for="inputNombre" class="block text-xs font-bold uppercase text-gray-500 mb-1">Nombre completo</label>
-                    <input type="text" id="inputNombre" required placeholder="Ej: Juan Pérez"
+                    <input type="text" id="inputNombre" aria-describedby="errorNombre" required placeholder="Ej: Juan Pérez"
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
+                    <p id="errorNombre" role="status" class="text-red-500 text-xs mt-1 font-semibold"></p>
                 </div>
 
                 <!-- Cédula (Regex: 9 dígitos) -->

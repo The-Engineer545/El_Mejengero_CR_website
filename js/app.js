@@ -20,8 +20,56 @@ const botonesCategoria = document.querySelectorAll(".btn-categoria");
 
 // Variables globales
 let productos = [];
-let carrito = JSON.parse(localStorage.getItem("carrito_elmejenguero")) || [];
+let carrito = cargarCarritoGuardado();
 let categoriaActual = "todas";
+
+// Un carrito dañado no debe impedir que arranque el resto de la página.
+function cargarCarritoGuardado() {
+    try {
+        const datos = JSON.parse(localStorage.getItem("carrito_elmejenguero")) || [];
+        if (!Array.isArray(datos)) return [];
+
+        return datos.filter((item) =>
+            item !== null && typeof item === "object" &&
+            Number.isInteger(item.id) && item.id > 0 &&
+            typeof item.nombre === "string" &&
+            typeof item.imagen === "string" &&
+            typeof item.talla === "string" && item.talla.trim() !== "" &&
+            Number.isFinite(item.precio) && item.precio >= 0 &&
+            Number.isSafeInteger(item.cantidad) && item.cantidad > 0
+        );
+    } catch (error) {
+        console.warn("No se pudo recuperar el carrito guardado:", error);
+        return [];
+    }
+}
+
+// No inventar tallas para los productos que todavía tienen datos pendientes.
+function obtenerTallas(producto) {
+    return Array.isArray(producto.tallas)
+        ? producto.tallas.filter((talla) => typeof talla === "string" && talla.trim() !== "")
+        : [];
+}
+
+function cargarTallas(selectTalla, tallas) {
+    selectTalla.innerHTML = "";
+    selectTalla.disabled = tallas.length === 0;
+
+    if (tallas.length === 0) {
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = "Tallas pendientes";
+        selectTalla.appendChild(option);
+        return;
+    }
+
+    tallas.forEach((talla) => {
+        const option = document.createElement("option");
+        option.value = talla;
+        option.textContent = talla;
+        selectTalla.appendChild(option);
+    });
+}
 
 // --- MENÚ HAMBURGUESA ---
 btnHamburguesa.addEventListener("click", () => {
@@ -37,7 +85,8 @@ function filtrarProductos() {
 
     const productosFiltrados = productos.filter((producto) => {
         const coincideCategoria =
-            categoriaActual === "todas" || producto.categoria === categoriaActual;
+            categoriaActual === "todas" ||
+            producto.categoria.trim().toLowerCase() === categoriaActual.trim().toLowerCase();
         const coincideTexto =
             producto.nombre.toLowerCase().includes(textoBusqueda) ||
             producto.descripcion.toLowerCase().includes(textoBusqueda);
@@ -182,12 +231,8 @@ function renderizarProductos(listaProductos) {
         selectTalla.id = "talla-" + producto.id;
         selectTalla.className =
             "block w-full mt-1 border-gray-300 rounded-md text-sm p-2 bg-gray-50 border";
-        producto.tallas.forEach((talla) => {
-            const option = document.createElement("option");
-            option.value = talla;
-            option.textContent = talla;
-            selectTalla.appendChild(option);
-        });
+        const tallas = obtenerTallas(producto);
+        cargarTallas(selectTalla, tallas);
 
         divTalla.appendChild(labelTalla);
         divTalla.appendChild(selectTalla);
@@ -202,7 +247,9 @@ function renderizarProductos(listaProductos) {
         const btnAgregar = document.createElement("button");
         btnAgregar.className =
             "bg-black text-white w-full px-4 py-3 rounded-full mt-4 font-bold uppercase text-sm hover:bg-gray-800 transition";
-        btnAgregar.textContent = "Agregar al Carrito";
+        btnAgregar.textContent = tallas.length > 0 ? "Agregar al Carrito" : "Tallas pendientes";
+        btnAgregar.disabled = tallas.length === 0;
+        if (btnAgregar.disabled) btnAgregar.classList.add("opacity-50", "cursor-not-allowed");
         btnAgregar.addEventListener("click", () => agregarAlCarrito(producto.id, false, btnAgregar));
 
         article.appendChild(divInfo);
@@ -216,6 +263,7 @@ function renderizarProductos(listaProductos) {
 // ============================================================
 function agregarAlCarrito(idProducto, desdeModal = false, btnRef = null) {
     const producto = productos.find((p) => p.id === idProducto);
+    if (!producto) return;
     let tallaSeleccionada;
 
     if (desdeModal) {
@@ -223,6 +271,9 @@ function agregarAlCarrito(idProducto, desdeModal = false, btnRef = null) {
     } else {
         tallaSeleccionada = document.querySelector("#talla-" + idProducto).value;
     }
+
+    // Validar también aquí para impedir agregar una talla inexistente.
+    if (!obtenerTallas(producto).includes(tallaSeleccionada)) return;
 
     const itemExistente = carrito.find(
         (item) => item.id === idProducto && item.talla === tallaSeleccionada
@@ -380,6 +431,8 @@ function actualizarVistaCarrito() {
 const modalCheckout = document.querySelector("#modalCheckout");
 const cerrarModalCheckout = document.querySelector("#cerrarModalCheckout");
 const formCheckout = document.querySelector("#formCheckout");
+const inputNombre = document.querySelector("#inputNombre");
+const errorNombre = document.querySelector("#errorNombre");
 const inputCedula = document.querySelector("#inputCedula");
 const inputTelefono = document.querySelector("#inputTelefono");
 const errorCedula = document.querySelector("#errorCedula");
@@ -397,6 +450,7 @@ btnCheckout.addEventListener("click", () => {
     modalCheckout.classList.remove("hidden");
     // Limpiar campos y errores anteriores
     formCheckout.reset();
+    errorNombre.textContent = "";
     errorCedula.textContent = "";
     errorTelefono.textContent = "";
 });
@@ -408,6 +462,11 @@ cerrarModalCheckout.addEventListener("click", () => {
 // Cerrar checkout si click en el fondo oscuro
 modalCheckout.addEventListener("click", (e) => {
     if (e.target === modalCheckout) modalCheckout.classList.add("hidden");
+});
+
+// El atributo required no se ejecuta automáticamente porque el formulario usa novalidate.
+inputNombre.addEventListener("input", () => {
+    errorNombre.textContent = inputNombre.value.trim() ? "" : "Ingresá tu nombre completo.";
 });
 
 // Validación en tiempo real — Cédula
@@ -428,9 +487,12 @@ inputTelefono.addEventListener("input", () => {
     }
 });
 
-// Envío del formulario — Solo si ambos campos pasan el Regex
+// Preparar el pedido solo si el nombre y ambos campos con Regex son válidos.
 formCheckout.addEventListener("submit", (e) => {
     e.preventDefault();
+    if (carrito.length === 0) return;
+    const nombre = inputNombre.value.trim();
+    errorNombre.textContent = nombre ? "" : "Ingresá tu nombre completo.";
     const cedulaValida = regexCedula.test(inputCedula.value);
     const telefonoValido = regexTelefono.test(inputTelefono.value);
 
@@ -440,10 +502,9 @@ formCheckout.addEventListener("submit", (e) => {
     if (!telefonoValido) {
         errorTelefono.textContent = "El teléfono debe tener exactamente 8 dígitos.";
     }
-    if (!cedulaValida || !telefonoValido) return;
+    if (!nombre || !cedulaValida || !telefonoValido) return;
 
-    // Si pasa la validación, enviar por WhatsApp
-    const nombre = document.querySelector("#inputNombre").value;
+    // Si pasa la validación, preparar el mensaje para WhatsApp.
     const telefonoWA = "50663425133";
     let mensaje = `🛒 *Nuevo Pedido - El Mejenguero CR*%0A%0A`;
     mensaje += `👤 *Cliente:* ${nombre}%0A`;
@@ -461,10 +522,8 @@ formCheckout.addEventListener("submit", (e) => {
     mensaje += `💰 *TOTAL A PAGAR: ₡${total.toLocaleString("es-CR")}*%0A%0A`;
     mensaje += "Por favor indíquenme los métodos de pago disponibles y opciones de envío. ¡Pura vida!";
 
-    carrito = [];
-    guardarCarrito();
-    actualizarVistaCarrito();
-    actualizarBadgeCarrito();
+    // Abrir WhatsApp no confirma que el cliente envió el mensaje.
+    // Conservar el carrito y sus datos guardados, incluso si se bloquea la ventana.
     modalCheckout.classList.add("hidden");
 
     window.open(`https://wa.me/${telefonoWA}?text=${mensaje}`, "_blank");
@@ -487,17 +546,16 @@ function abrirModalProducto(idProducto) {
         "₡" + producto.precio.toLocaleString("es-CR");
 
     const selectTalla = document.querySelector("#modalTalla");
-    selectTalla.innerHTML = "";
-    producto.tallas.forEach((talla) => {
-        const option = document.createElement("option");
-        option.value = talla;
-        option.textContent = talla;
-        selectTalla.appendChild(option);
-    });
+    const tallas = obtenerTallas(producto);
+    cargarTallas(selectTalla, tallas);
 
     const btnAgregar = document.querySelector("#modalBtnAgregar");
     // Clonar para eliminar listeners anteriores
     const btnNuevo = btnAgregar.cloneNode(true);
+    btnNuevo.disabled = tallas.length === 0;
+    btnNuevo.textContent = tallas.length > 0 ? "Agregar al Carrito" : "Tallas pendientes";
+    btnNuevo.classList.toggle("opacity-50", btnNuevo.disabled);
+    btnNuevo.classList.toggle("cursor-not-allowed", btnNuevo.disabled);
     btnAgregar.parentNode.replaceChild(btnNuevo, btnAgregar);
     btnNuevo.addEventListener("click", () => agregarAlCarrito(producto.id, true, btnNuevo));
 
