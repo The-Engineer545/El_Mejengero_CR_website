@@ -103,5 +103,27 @@
     "tallas": ["S", "M", "L", "XL"],
     "playerVersion": true,
     "disponible": true
+  },
+  {
+    "id": 11,
+    "nombre": "México",
+    "categoria": "Selecciones",
+    "descripcion": "Selección Nacional · Local",
+    "precio": 18000,
+    "imagen": "img/productos/mexico.jpg",
+    "tallas": ["S", "M", "L", "XL"],
+    "playerVersion": false,
+    "disponible": true
+  },
+  {
+    "id": 12,
+    "nombre": "Juventus",
+    "categoria": "Clubes",
+    "descripcion": "Temporada 2026 · Local",
+    "precio": 18000,
+    "imagen": "img/productos/juventus.jpg",
+    "tallas": ["S", "M", "L", "XL"],
+    "playerVersion": false,
+    "disponible": true
   }
 ]
