@@ -18,20 +18,12 @@ let carrito = cargarCarritoGuardado();
 // Un carrito dañado no debe impedir que arranque el resto de la página.
 function cargarCarritoGuardado() {
     try {
+        // Se lee del localStorage y se convierte a objeto de JavaScript.
+        // Si está vacío o nulo, devolvemos un arreglo vacío [].
         const datos = JSON.parse(localStorage.getItem("carrito_elmejenguero")) || [];
-        if (!Array.isArray(datos)) return [];
-
-        return datos.filter((item) =>
-            item !== null && typeof item === "object" &&
-            Number.isInteger(item.id) && item.id > 0 &&
-            typeof item.nombre === "string" &&
-            typeof item.imagen === "string" &&
-            typeof item.talla === "string" && item.talla.trim() !== "" &&
-            Number.isFinite(item.precio) && item.precio >= 0 &&
-            Number.isSafeInteger(item.cantidad) && item.cantidad > 0
-        );
+        return datos;
     } catch (error) {
-        console.warn("No se pudo recuperar el carrito guardado:", error);
+        console.error("Error al cargar el carrito:", error);
         return [];
     }
 }
@@ -130,30 +122,42 @@ function agregarAlCarrito(idProducto, desdeDetalle = false, btnRef = null) {
     }
 }
 
-window.eliminarDelCarrito = (index) => {
+function eliminarDelCarrito(index) {
     carrito.splice(index, 1);
     guardarCarrito();
     actualizarVistaCarrito();
     actualizarBadgeCarrito();
-};
+}
 
-window.cambiarCantidad = (index, delta) => {
+function cambiarCantidad(index, delta) {
     if (carrito[index].cantidad + delta > 0) {
         carrito[index].cantidad += delta;
         guardarCarrito();
         actualizarVistaCarrito();
         actualizarBadgeCarrito();
     }
-};
+}
 
 function guardarCarrito() {
     localStorage.setItem("carrito_elmejenguero", JSON.stringify(carrito));
 }
 
 function actualizarBadgeCarrito() {
-    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    // Sumar la cantidad de todos los productos en el carrito
+    let totalItems = 0;
+    
+    carrito.forEach(function (item) {
+        totalItems += item.cantidad;
+    });
+    
     contadorCarrito.innerText = totalItems;
-    contadorCarrito.style.display = totalItems > 0 ? "flex" : "none";
+    
+    // Ocultar o mostrar la burbuja roja dependiendo de si hay items
+    if (totalItems > 0) {
+        contadorCarrito.style.display = "flex";
+    } else {
+        contadorCarrito.style.display = "none";
+    }
 }
 
 function actualizarVistaCarrito() {
