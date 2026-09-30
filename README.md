@@ -4,6 +4,11 @@ El Mejenguero CR es una tienda en línea (e-commerce) dedicada a la venta de cam
 
 Este proyecto web está diseñado para brindar una experiencia de usuario rápida y amigable, con un catálogo interactivo, carrito de compras integrado y un proceso de compra que redirige los pedidos directamente a través de WhatsApp.
 
+## 🚀 Proyecto en Vivo (Prueba)
+
+Puedes ver el proyecto y probar todas sus funcionalidades en vivo aquí:
+**[El Mejenguero CR - Firebase Hosting](https://el-mejenguero-cr.web.app/)**
+
 ## Características Principales
 
 *   **Catálogo de Productos Dinámico:** Los productos se cargan dinámicamente desde un archivo JSON, lo que facilita la actualización del inventario sin necesidad de modificar el código HTML.
