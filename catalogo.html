@@ -7,7 +7,9 @@
     <title>Catálogo | El Mejenguero CR</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        #carrito { transition: opacity 0.3s ease; }
+        #carrito {
+            transition: opacity 0.3s ease;
+        }
     </style>
 </head>
 
@@ -19,7 +21,8 @@
 
             <!-- Izquierda: Botón Menú + Logo -->
             <div class="flex items-center gap-4">
-                <button type="button" id="btnHamburguesa" aria-label="Abrir categorías" aria-controls="sidebarMenu" aria-expanded="false"
+                <button type="button" id="btnHamburguesa" aria-label="Abrir categorías" aria-controls="sidebarMenu"
+                    aria-expanded="false"
                     class="flex items-center justify-center h-10 w-10 rounded-full hover:bg-gray-100 transition text-black">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
@@ -28,7 +31,9 @@
                 </button>
 
                 <a href="index.html" class="flex items-center gap-2">
-                    <div class="h-10 w-10 flex items-center justify-center rounded-full bg-black text-white font-bold text-lg">EM</div>
+                    <div
+                        class="h-10 w-10 flex items-center justify-center rounded-full bg-black text-white font-bold text-lg">
+                        EM</div>
                     <div class="hidden sm:block">
                         <p class="font-black uppercase tracking-widest text-lg leading-tight">El Mejenguero</p>
                         <p class="text-xs text-gray-400 font-semibold tracking-wider">CR STORE</p>
@@ -62,19 +67,24 @@
 
         <!-- Sidebar Categorías (oculto por defecto, controlado por JS) -->
         <aside id="sidebarMenu"
-            class="hidden w-full md:w-64 bg-white border-r border-gray-200 shrink-0 md:sticky md:top-[73px] md:h-[calc(100vh-73px)] overflow-y-auto p-6 flex-col z-20">
+            class="hidden fixed top-20 left-0 w-64 bg-white border-r border-gray-200 p-6 flex-col z-30">
             <h2 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-4">Categorías</h2>
             <ul class="space-y-3 font-medium text-gray-700">
                 <li><a href="catalogo.html?categoria=todas" data-categoria="todas"
-                        class="btn-categoria font-bold text-black hover:text-black hover:font-bold transition block text-left w-full">Todas / Novedades</a></li>
+                        class="btn-categoria font-bold text-black hover:text-black hover:font-bold transition block text-left w-full">Todas
+                        / Novedades</a></li>
                 <li><a href="catalogo.html?categoria=nacionales" data-categoria="nacionales"
-                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Nacionales</a></li>
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Nacionales</a>
+                </li>
                 <li><a href="catalogo.html?categoria=selecciones" data-categoria="selecciones"
-                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Selecciones</a></li>
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Selecciones</a>
+                </li>
                 <li><a href="catalogo.html?categoria=clubes" data-categoria="clubes"
-                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Clubes Europeos</a></li>
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Clubes
+                        Europeos</a></li>
                 <li><a href="catalogo.html?categoria=retro" data-categoria="retro"
-                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Retro / Clásicas</a></li>
+                        class="btn-categoria hover:text-black hover:font-bold transition block text-left w-full">Retro /
+                        Clásicas</a></li>
             </ul>
         </aside>
 
@@ -102,7 +112,8 @@
         <div class="w-full px-4 lg:px-8 flex flex-col md:flex-row justify-between gap-8 max-w-7xl mx-auto">
             <div class="md:w-1/3">
                 <h3 class="text-xl font-black uppercase tracking-widest mb-4">El Mejenguero CR</h3>
-                <p class="text-gray-400 text-sm">Las mejores camisas de fútbol en Costa Rica. Calidad garantizada, pagos seguros por SINPE Móvil y envíos a todo el país.</p>
+                <p class="text-gray-400 text-sm">Las mejores camisas de fútbol en Costa Rica. Calidad garantizada, pagos
+                    seguros por SINPE Móvil y envíos a todo el país.</p>
             </div>
             <div>
                 <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">Contacto</h4>
@@ -115,9 +126,11 @@
             <div>
                 <h4 class="text-lg font-bold mb-4 uppercase tracking-wider">Síguenos</h4>
                 <div class="flex gap-4">
-                    <a href="https://instagram.com/elmejenguero_cr" target="_blank" class="text-gray-400 hover:text-white transition">
+                    <a href="https://instagram.com/elmejenguero_cr" target="_blank"
+                        class="text-gray-400 hover:text-white transition">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
                         </svg>
                     </a>
                 </div>
@@ -130,7 +143,8 @@
         <div class="bg-white w-full max-w-md h-full shadow-2xl p-6 flex flex-col">
             <div class="flex justify-between items-center border-b pb-4">
                 <h2 class="text-2xl font-black">Tu Carrito</h2>
-                <button id="cerrarCarrito" class="text-gray-500 hover:text-black font-bold text-2xl px-2">&times;</button>
+                <button id="cerrarCarrito"
+                    class="text-gray-500 hover:text-black font-bold text-2xl px-2">&times;</button>
             </div>
             <div id="carrito-items" class="flex-1 overflow-y-auto py-4 space-y-4"></div>
             <div class="border-t pt-4">
@@ -147,7 +161,8 @@
     </div>
 
     <!-- Modal: Checkout con validación Regex (TAREA DARÍO) -->
-    <div id="modalCheckout" class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
+    <div id="modalCheckout"
+        class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative">
             <button id="cerrarModalCheckout"
                 class="absolute top-4 right-4 bg-gray-200 text-black hover:bg-red-500 hover:text-white rounded-full w-8 h-8 flex items-center justify-center font-bold transition">&times;</button>
@@ -158,15 +173,18 @@
             <form id="formCheckout" novalidate class="space-y-5">
                 <!-- Nombre -->
                 <div>
-                    <label for="inputNombre" class="block text-xs font-bold uppercase text-gray-500 mb-1">Nombre completo</label>
-                    <input type="text" id="inputNombre" aria-describedby="errorNombre" required placeholder="Ej: Juan Pérez"
+                    <label for="inputNombre" class="block text-xs font-bold uppercase text-gray-500 mb-1">Nombre
+                        completo</label>
+                    <input type="text" id="inputNombre" aria-describedby="errorNombre" required
+                        placeholder="Ej: Juan Pérez"
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
                     <p id="errorNombre" role="status" class="text-red-500 text-xs mt-1 font-semibold"></p>
                 </div>
 
                 <!-- Cédula (Regex: 9 dígitos) -->
                 <div>
-                    <label for="inputCedula" class="block text-xs font-bold uppercase text-gray-500 mb-1">Cédula (9 dígitos)</label>
+                    <label for="inputCedula" class="block text-xs font-bold uppercase text-gray-500 mb-1">Cédula (9
+                        dígitos)</label>
                     <input type="text" id="inputCedula" required maxlength="9" placeholder="Ej: 123456789"
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
                     <p id="errorCedula" class="text-red-500 text-xs mt-1 font-semibold"></p>
@@ -174,7 +192,8 @@
 
                 <!-- Teléfono (Regex: 8 dígitos) -->
                 <div>
-                    <label for="inputTelefono" class="block text-xs font-bold uppercase text-gray-500 mb-1">Teléfono CR (8 dígitos)</label>
+                    <label for="inputTelefono" class="block text-xs font-bold uppercase text-gray-500 mb-1">Teléfono CR
+                        (8 dígitos)</label>
                     <input type="text" id="inputTelefono" required maxlength="8" placeholder="Ej: 63425133"
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
                     <p id="errorTelefono" class="text-red-500 text-xs mt-1 font-semibold"></p>
@@ -193,7 +212,8 @@
         target="_blank"
         class="fixed bottom-6 right-6 z-40 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+            <path
+                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.347-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
         </svg>
     </a>
 
@@ -202,4 +222,5 @@
     <script src="js/productos.js"></script>
     <script src="js/catalogo.js"></script>
 </body>
+
 </html>
