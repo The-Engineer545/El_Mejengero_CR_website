@@ -1,6 +1,4 @@
-// ============================================================
-// TAREA JOSUÉ: Selección de elementos del DOM y carrito
-// ============================================================
+// Selección de elementos del DOM y carrito
 const btnHamburguesa = document.querySelector("#btnHamburguesa");
 const sidebarMenu = document.querySelector("#sidebarMenu");
 const btnCarrito = document.querySelector("#btnCarrito");
@@ -55,14 +53,14 @@ function cargarTallas(selectTalla, tallas) {
     });
 }
 
-// --- MENÚ HAMBURGUESA ---
+// MENÚ HAMBURGUESA
 btnHamburguesa.addEventListener("click", () => {
     sidebarMenu.classList.toggle("hidden");
     sidebarMenu.classList.toggle("flex");
     btnHamburguesa.setAttribute("aria-expanded", !sidebarMenu.classList.contains("hidden"));
 });
 
-// --- ABRIR / CERRAR CARRITO ---
+// ABRIR / CERRAR CARRITO
 btnCarrito.addEventListener("click", () => {
     modalCarrito.classList.remove("hidden");
     actualizarVistaCarrito();
@@ -72,9 +70,7 @@ cerrarCarrito.addEventListener("click", () => {
     modalCarrito.classList.add("hidden");
 });
 
-// ============================================================
-// TAREA JOSUÉ: Lógica completa del carrito y localStorage
-// ============================================================
+// Lógica completa del carrito y localStorage
 function agregarAlCarrito(idProducto, desdeDetalle = false, btnRef = null) {
     const producto = productos.find((p) => p.id === idProducto);
     if (!producto) return;
@@ -145,13 +141,13 @@ function guardarCarrito() {
 function actualizarBadgeCarrito() {
     // Sumar la cantidad de todos los productos en el carrito
     let totalItems = 0;
-    
+
     carrito.forEach(function (item) {
         totalItems += item.cantidad;
     });
-    
+
     contadorCarrito.innerText = totalItems;
-    
+
     // Ocultar o mostrar la burbuja roja dependiendo de si hay items
     if (totalItems > 0) {
         contadorCarrito.style.display = "flex";
@@ -251,9 +247,7 @@ function actualizarVistaCarrito() {
     carritoTotalElement.innerText = "₡" + total.toLocaleString("es-CR");
 }
 
-// ============================================================
-// TAREA DARÍO: Checkout con validación Regex
-// ============================================================
+// Checkout
 const modalCheckout = document.querySelector("#modalCheckout");
 const cerrarModalCheckout = document.querySelector("#cerrarModalCheckout");
 const formCheckout = document.querySelector("#formCheckout");
@@ -264,9 +258,9 @@ const inputTelefono = document.querySelector("#inputTelefono");
 const errorCedula = document.querySelector("#errorCedula");
 const errorTelefono = document.querySelector("#errorTelefono");
 
-// Expresiones regulares — Cédula CR: exactamente 9 dígitos numéricos
+// Cédula: exactamente 9 dígitos numéricos
 const regexCedula = /^\d{9}$/;
-// Teléfono CR: exactamente 8 dígitos numéricos
+// Teléfono: exactamente 8 dígitos numéricos
 const regexTelefono = /^\d{8}$/;
 
 // Al hacer click en "Finalizar Compra" se abre el formulario de checkout

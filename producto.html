@@ -19,7 +19,7 @@
     <header class="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
         <div class="w-full flex items-center justify-between px-4 lg:px-8 py-4">
 
-            <!-- Izquierda: Botón Menú + Logo -->
+            <!-- Izquierda Botón Menú + Logo -->
             <div class="flex items-center gap-4">
                 <button type="button" id="btnHamburguesa" aria-label="Abrir categorías" aria-controls="sidebarMenu"
                     aria-expanded="false"
@@ -46,7 +46,7 @@
                 <a href="catalogo.html" class="underline">Catálogo</a>
             </nav>
 
-            <!-- Derecha: Carrito -->
+            <!-- Derecha Carrito -->
             <div class="flex items-center gap-4 sm:gap-6">
                 <button id="btnCarrito" aria-label="Carrito"
                     class="text-gray-500 hover:text-black transition relative p-2">
@@ -65,7 +65,7 @@
     <!-- Layout Principal -->
     <div class="flex flex-col md:flex-row w-full relative">
 
-        <!-- Sidebar Categorías (oculto por defecto, controlado por JS) -->
+        <!-- Sidebar Categorías oculto por defecto, controlado por JS -->
         <aside id="sidebarMenu"
             class="hidden fixed top-20 left-4 w-64 bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex-col z-30">
             <h2 class="text-sm font-black uppercase tracking-widest text-gray-400 mb-4">Categorías</h2>
@@ -83,7 +83,8 @@
                         class="btn-categoria block w-full px-3 py-2 rounded-lg hover:bg-gray-100 hover:font-bold transition">Clubes
                         Europeos</a></li>
                 <li><a href="catalogo.html?categoria=retro" data-categoria="retro"
-                        class="btn-categoria block w-full px-3 py-2 rounded-lg hover:bg-gray-100 hover:font-bold transition">Retro /
+                        class="btn-categoria block w-full px-3 py-2 rounded-lg hover:bg-gray-100 hover:font-bold transition">Retro
+                        /
                         Clásicas</a></li>
             </ul>
         </aside>
@@ -155,7 +156,7 @@
         </div>
     </footer>
 
-    <!-- Modal: Carrito -->
+    <!-- Modal de Carrito -->
     <div id="carrito" class="hidden fixed inset-0 bg-black bg-opacity-60 z-50 flex justify-end">
         <div class="bg-white w-full max-w-md h-full shadow-2xl p-6 flex flex-col">
             <div class="flex justify-between items-center border-b pb-4">
@@ -177,7 +178,7 @@
         </div>
     </div>
 
-    <!-- Modal: Checkout con validación Regex (TAREA DARÍO) -->
+    <!-- Modal de Checkout -->
     <div id="modalCheckout"
         class="hidden fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 relative">
@@ -198,7 +199,7 @@
                     <p id="errorNombre" role="status" class="text-red-500 text-xs mt-1 font-semibold"></p>
                 </div>
 
-                <!-- Cédula (Regex: 9 dígitos) -->
+                <!-- Cédula (9 dígitos) -->
                 <div>
                     <label for="inputCedula" class="block text-xs font-bold uppercase text-gray-500 mb-1">Cédula (9
                         dígitos)</label>
@@ -207,7 +208,7 @@
                     <p id="errorCedula" class="text-red-500 text-xs mt-1 font-semibold"></p>
                 </div>
 
-                <!-- Teléfono (Regex: 8 dígitos) -->
+                <!-- Teléfono (8 dígitos) -->
                 <div>
                     <label for="inputTelefono" class="block text-xs font-bold uppercase text-gray-500 mb-1">Teléfono CR
                         (8 dígitos)</label>

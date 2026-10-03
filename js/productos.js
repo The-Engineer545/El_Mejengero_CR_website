@@ -43,12 +43,12 @@ function renderizarProductos(listaProductos) {
     productosGrid.innerHTML = "";
 
     listaProductos.forEach((producto) => {
-        // --- Tarjeta principal ---
+        // Tarjeta principal
         const article = document.createElement("article");
         article.className =
             "bg-white p-5 rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition flex flex-col justify-between";
 
-        // --- Contenedor de imagen (clickeable) ---
+        // Contenedor de imagen (clickeable)
         const divImagen = document.createElement("a");
         divImagen.className =
             "bg-gray-100 rounded-xl overflow-hidden relative h-64 flex items-center justify-center cursor-pointer group";
@@ -86,7 +86,7 @@ function renderizarProductos(listaProductos) {
         divOverlay.appendChild(spanVerDetalle);
         divImagen.appendChild(divOverlay);
 
-        // --- Textos de la tarjeta ---
+        // Textos de la tarjeta
         const divInfo = document.createElement("div");
 
         const h3 = document.createElement("h3");
@@ -104,7 +104,7 @@ function renderizarProductos(listaProductos) {
         pPrecio.className = "text-xl font-black mt-3";
         pPrecio.textContent = "₡" + producto.precio.toLocaleString("es-CR");
 
-        // --- Selector de talla ---
+        // Selector de talla
         const divTalla = document.createElement("div");
         divTalla.className = "mt-3";
 
@@ -129,7 +129,7 @@ function renderizarProductos(listaProductos) {
         divInfo.appendChild(pPrecio);
         divInfo.appendChild(divTalla);
 
-        // --- Botón Agregar al Carrito ---
+        // Botón Agregar al Carrito
         const btnAgregar = document.createElement("button");
         btnAgregar.className =
             "bg-black text-white w-full px-4 py-3 rounded-full mt-4 font-bold uppercase text-sm hover:bg-gray-800 transition";
