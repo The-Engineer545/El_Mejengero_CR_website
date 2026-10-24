@@ -1,0 +1,130 @@
+{
+  "info": {
+    "_postman_id": "b91cb512-c37d-4cf4-8c03-28074ff99ba2",
+    "name": "El Mejenguero CR",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59172955",
+    "_collection_link": "https://go.postman.co/collection/59172955-b91cb512-c37d-4cf4-8c03-28074ff99ba2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET camisetas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/camisetas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "camisetas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST camiseta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nombre\": \"Costa Rica\",\r\n  \"descripcion\": \"Selección Nacional · Local\",\r\n  \"precio\": 18000,\r\n  \"categoria\": \"Selecciones\",\r\n  \"imagen\": \"img/productos/costa-rica.jpg\",\r\n  \"tallas\": [\r\n    \"S\",\r\n    \"M\",\r\n    \"L\",\r\n    \"XL\"\r\n  ],\r\n  \"playerVersion\": true,\r\n  \"disponible\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/camisetas",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "camisetas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH camiseta",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"precio\": 19500 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/camisetas/{{idCamiseta}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "camisetas",
+            "{{idCamiseta}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE camiseta",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/camisetas/{{idCamiseta}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "camisetas",
+            "{{idCamiseta}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "value": ""
+    },
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "idCamiseta",
+      "value": ""
+    }
+  ]
+}

@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import type { Camiseta } from './models/camiseta.model';
 import { CreateCamisetaDto } from './dto/create-camiseta.dto';
+import { UpdateCamisetaDto } from './dto/update-camiseta.dto';
 
 @Injectable()
 export class CamisetasService {
@@ -27,5 +28,30 @@ export class CamisetasService {
     };
     this.camisetas.push(camiseta);
     return camiseta;
+  }
+
+  // Recibe id y cambios. Devuelve el registro actualizado.
+  update(id: number, datos: UpdateCamisetaDto): Camiseta {
+    const camiseta = this.camisetas.find((item) => item.id === id);
+    if (!camiseta) {
+      throw new NotFoundException('Camiseta no encontrada');
+    }
+    const cambios = Object.fromEntries(
+      Object.entries(datos).filter(
+        ([clave, valor]) => valor !== undefined && valor !== null,
+      ),
+    );
+    Object.assign(camiseta, cambios);
+    return camiseta;
+  }
+
+  // Recibe el id. Elimina el registro y devuelve confirmación.
+  remove(id: number): { mensaje: string } {
+    const indice = this.camisetas.findIndex((item) => item.id === id);
+    if (indice === -1) {
+      throw new NotFoundException('Camiseta no encontrada');
+    }
+    this.camisetas.splice(indice, 1);
+    return { mensaje: 'Camiseta eliminada' };
   }
 }
