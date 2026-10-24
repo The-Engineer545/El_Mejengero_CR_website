@@ -1,43 +1,56 @@
 # Backend de El Mejengero CR
+
 Avance del Proyecto 2 para el Laboratorio 4 de Programación III.
 Repositorio: https://github.com/The-Engineer545/El_Mejengero_CR_website
 
 ## Instalar y ejecutar
-Abrir la carpeta El_Mejengero_CR_website en VS Code.
-En la terminal de la raíz ejecutar:
+
+1. Abrir la carpeta `El_Mejengero_CR_website` en VS Code.
+2. En la terminal de la raíz ejecutar:
+
+```bash
 cd backend
 npm ci
 npm run build
 npm run start:dev
+```
 
-API local: http://localhost:3000/camisetas
-Almacenamiento: arreglo en memoria, vacío al iniciar.
-Los cambios se pierden al reiniciar el servidor.
-El frontend aún consulta data/productos.json.
+- API local: http://localhost:3000/camisetas
+- Almacenamiento: arreglo en memoria, vacío al iniciar.
+- Los cambios se pierden al reiniciar el servidor.
+- El frontend aún consulta `data/productos.json`.
 
 ## Recurso
-id lo genera el servidor.
-Obligatorios: nombre, descripcion, precio, categoria, imagen.
-Opcionales: tallas, playerVersion, disponible.
+
+Recurso: `camisetas`.
+
+- `id` lo genera el servidor.
+- Obligatorios: `nombre`, `descripcion`, `precio`, `categoria`, `imagen`.
+- Opcionales: `tallas`, `playerVersion`, `disponible`.
 
 ## Endpoints
-GET /camisetas: listar; 200.
-POST /camisetas: crear; 201.
-PATCH /camisetas/:id: modificar parcialmente; 200.
-DELETE /camisetas/:id: eliminar; 200.
+
+- `GET /camisetas`: listar; 200.
+- `POST /camisetas`: crear; 201.
+- `PATCH /camisetas/:id`: modificar parcialmente; 200.
+- `DELETE /camisetas/:id`: eliminar; 200.
+
 Datos inválidos: 400. Id inexistente al cambiar o borrar: 404.
 
 ## Pruebas
-Importar postman/El Mejenguero CR.postman_collection.json.
-baseUrl: http://localhost:3000.
-Actualizar idCamiseta con el id devuelto por POST.
-Las capturas están en evidencias/.
+
+- Importar `postman/El Mejenguero CR.postman_collection.json`.
+- `baseUrl`: http://localhost:3000.
+- Actualizar `idCamiseta` con el id devuelto por POST.
+- Las capturas están en `evidencias/`.
 
 ## Versiones
+
 - Node: v24.22.1
 - npm: 11.19.1
 
 ## Ejemplo de POST
+
 ```json
 {
   "nombre": "Costa Rica",
@@ -52,6 +65,7 @@ Las capturas están en evidencias/.
 ```
 
 ## Ejemplo de PATCH
+
 ```json
 { "precio": 19500 }
 ```
