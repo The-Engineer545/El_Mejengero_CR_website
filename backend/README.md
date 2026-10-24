@@ -28,7 +28,7 @@ DELETE /camisetas/:id: eliminar; 200.
 Datos inválidos: 400. Id inexistente al cambiar o borrar: 404.
 
 ## Pruebas
-Importar postman/El_Mejengero_CR.postman_collection.json.
+Importar postman/El Mejenguero CR.postman_collection.json.
 baseUrl: http://localhost:3000.
 Actualizar idCamiseta con el id devuelto por POST.
 Las capturas están en evidencias/.
