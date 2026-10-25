@@ -326,27 +326,27 @@ formCheckout.addEventListener("submit", (e) => {
 
     // Si pasa la validación, preparar el mensaje para WhatsApp.
     const telefonoWA = "50663425133";
-    let mensaje = `🛒 *Nuevo Pedido - El Mejenguero CR*%0A%0A`;
-    mensaje += `👤 *Cliente:* ${nombre}%0A`;
-    mensaje += `🪪 *Cédula:* ${inputCedula.value}%0A`;
-    mensaje += `📞 *Teléfono:* ${inputTelefono.value}%0A%0A`;
+    let mensaje = `\u{1F6D2} *Nuevo Pedido - El Mejenguero CR*\n\n`;
+    mensaje += `\u{1F464} *Cliente:* ${nombre}\n`;
+    mensaje += `\u{1FAAA} *Cédula:* ${inputCedula.value}\n`;
+    mensaje += `\u{1F4DE} *Teléfono:* ${inputTelefono.value}\n\n`;
 
     let total = 0;
     carrito.forEach((item) => {
-        mensaje += `⚽ ${item.nombre}%0A`;
-        mensaje += `   Talla: ${item.talla} | Cantidad: ${item.cantidad}%0A`;
-        mensaje += `   Subtotal: ₡${(item.precio * item.cantidad).toLocaleString("es-CR")}%0A%0A`;
+        mensaje += `\u{26BD} ${item.nombre}\n`;
+        mensaje += `   Talla: ${item.talla} | Cantidad: ${item.cantidad}\n`;
+        mensaje += `   Subtotal: ₡${(item.precio * item.cantidad).toLocaleString("es-CR")}\n\n`;
         total += item.precio * item.cantidad;
     });
 
-    mensaje += `💰 *TOTAL A PAGAR: ₡${total.toLocaleString("es-CR")}*%0A%0A`;
+    mensaje += `\u{1F4B0} *TOTAL A PAGAR: ₡${total.toLocaleString("es-CR")}*\n\n`;
     mensaje += "Por favor indíquenme los métodos de pago disponibles y opciones de envío. ¡Pura vida!";
 
     // Abrir WhatsApp no confirma que el cliente envió el mensaje.
     // Conservar el carrito y sus datos guardados, incluso si se bloquea la ventana.
     modalCheckout.classList.add("hidden");
 
-    window.open(`https://wa.me/${telefonoWA}?text=${mensaje}`, "_blank");
+    window.open(`https://api.whatsapp.com/send?phone=${telefonoWA}&text=${encodeURIComponent(mensaje)}`, "_blank");
 });
 
 // Actualizar también al regresar mediante el historial del navegador.
