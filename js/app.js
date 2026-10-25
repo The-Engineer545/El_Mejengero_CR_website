@@ -53,6 +53,11 @@ function obtenerTallas(producto) {
         : [];
 }
 
+// Solo "disponible: false" cuenta como agotada; si el campo falta, se considera disponible.
+function estaDisponible(producto) {
+    return producto.disponible !== false;
+}
+
 function cargarTallas(selectTalla, tallas) {
     selectTalla.innerHTML = "";
     selectTalla.disabled = tallas.length === 0;
@@ -94,6 +99,7 @@ cerrarCarrito.addEventListener("click", () => {
 function agregarAlCarrito(idProducto, desdeDetalle = false, btnRef = null) {
     const producto = productos.find((p) => p.id === idProducto);
     if (!producto) return;
+    if (!estaDisponible(producto)) return;
     let tallaSeleccionada;
 
     if (desdeDetalle) {
@@ -167,9 +173,8 @@ function reconciliarCarrito() {
 
     carrito = carrito.reduce((resultado, item) => {
         const producto = productos.find((p) => p.id === item.id);
-        // Se descarta si el producto ya no existe o la talla ya no se vende.
-        if (!producto || !obtenerTallas(producto).includes(item.talla)) return resultado;
-
+        // Se descarta si el producto ya no existe, está agotado o la talla ya no se vende.
+        if (!producto || !estaDisponible(producto) || !obtenerTallas(producto).includes(item.talla)) return resultado;
         resultado.push({
             ...item,
             nombre: producto.nombre,

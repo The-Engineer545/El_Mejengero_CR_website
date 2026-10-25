@@ -25,9 +25,19 @@ async function iniciarProducto() {
         document.querySelector("#productoPrecio").textContent = "₡" + producto.precio.toLocaleString("es-CR");
         const tallas = obtenerTallas(producto);
         cargarTallas(document.querySelector("#productoTalla"), tallas);
+        const agotado = !estaDisponible(producto);
+
+        const estado = document.querySelector("#productoEstado");
+        estado.textContent = (producto.playerVersion ? "Versión Player · " : "") + (agotado ? "Agotada" : "Disponible");
+        estado.classList.add(agotado ? "text-red-600" : "text-green-600");
+
         const btnAgregar = document.querySelector("#productoBtnAgregar");
-        btnAgregar.disabled = tallas.length === 0;
-        btnAgregar.textContent = tallas.length > 0 ? "Agregar al Carrito" : "Tallas pendientes";
+        btnAgregar.disabled = agotado || tallas.length === 0;
+        if (agotado) {
+            btnAgregar.textContent = "Agotada";
+        } else {
+            btnAgregar.textContent = tallas.length > 0 ? "Agregar al Carrito" : "Tallas pendientes";
+        }
         btnAgregar.classList.toggle("opacity-50", btnAgregar.disabled);
         btnAgregar.classList.toggle("cursor-not-allowed", btnAgregar.disabled);
         btnAgregar.addEventListener("click", () => agregarAlCarrito(producto.id, true, btnAgregar));
