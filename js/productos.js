@@ -134,9 +134,15 @@ function renderizarProductos(listaProductos) {
         const btnAgregar = document.createElement("button");
         btnAgregar.className =
             "bg-black text-white w-full px-4 py-3 rounded-full mt-4 font-bold uppercase text-sm hover:bg-gray-800 transition";
-        btnAgregar.textContent = tallas.length > 0 ? "Agregar al Carrito" : "Tallas pendientes";
-        btnAgregar.disabled = tallas.length === 0;
+          const agotado = !estaDisponible(producto);
+        if (agotado) {
+            btnAgregar.textContent = "Agotada";
+        } else {
+            btnAgregar.textContent = tallas.length > 0 ? "Agregar al Carrito" : "Tallas pendientes";
+        }
+        btnAgregar.disabled = agotado || tallas.length === 0;
         if (btnAgregar.disabled) btnAgregar.classList.add("opacity-50", "cursor-not-allowed");
+
         btnAgregar.addEventListener("click", () => agregarAlCarrito(producto.id, false, btnAgregar));
 
         article.appendChild(divInfo);
