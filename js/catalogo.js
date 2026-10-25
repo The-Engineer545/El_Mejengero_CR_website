@@ -23,7 +23,7 @@ function filtrarProductos() {
     if (productosFiltrados.length === 0) {
         const mensaje = document.createElement("p");
         mensaje.className = "col-span-full text-center text-gray-500 py-10 font-bold text-lg";
-        mensaje.textContent = "No encontramos camisas con esos filtros ⚽";
+        mensaje.textContent = "No encontramos camisetas con esos filtros ⚽";
         productosGrid.appendChild(mensaje);
     }
 }
