@@ -4,6 +4,7 @@ async function cargarProductos() {
     if (!respuesta.ok) throw new Error("No se pudo cargar el catálogo");
     productos = await respuesta.json();
     if (!Array.isArray(productos)) throw new Error("El catálogo no es una lista");
+    reconciliarCarrito(); // Se asegura de que el carrito solo tenga productos válidos.
     return productos;
 }
 

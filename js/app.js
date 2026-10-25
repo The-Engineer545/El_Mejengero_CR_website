@@ -11,15 +11,35 @@ const btnCheckout = document.querySelector("#btnCheckout");
 
 // Variables globales
 let productos = [];
+const CANTIDAD_MAXIMA = 10;
 let carrito = cargarCarritoGuardado();
+
+// localStorage lo puede editar cualquiera: no confiar en lo que trae.
+function itemValido(item) {
+    return (
+        item !== null &&
+        typeof item === "object" &&
+        Number.isInteger(item.id) &&
+        typeof item.nombre === "string" &&
+        typeof item.imagen === "string" &&
+        typeof item.talla === "string" &&
+        item.talla.trim() !== "" &&
+        Number.isFinite(item.precio) &&
+        item.precio > 0 &&
+        Number.isInteger(item.cantidad) &&
+        item.cantidad >= 1 &&
+        item.cantidad <= CANTIDAD_MAXIMA
+    );
+}
 
 // Un carrito dañado no debe impedir que arranque el resto de la página.
 function cargarCarritoGuardado() {
     try {
-        // Se lee del localStorage y se convierte a objeto de JavaScript.
-        // Si está vacío o nulo, devolvemos un arreglo vacío [].
-        const datos = JSON.parse(localStorage.getItem("carrito_elmejenguero")) || [];
-        return datos;
+        const datos = JSON.parse(localStorage.getItem("carrito_elmejenguero"));
+        // Si no es un arreglo ({}, 5, "x", null), se descarta completo.
+        if (!Array.isArray(datos)) return [];
+        // Los items rotos se quitan; los buenos se conservan.
+        return datos.filter(itemValido);
     } catch (error) {
         console.error("Error al cargar el carrito:", error);
         return [];
@@ -90,6 +110,8 @@ function agregarAlCarrito(idProducto, desdeDetalle = false, btnRef = null) {
     );
 
     if (itemExistente) {
+        // No pasar del máximo permitido por talla.
+        if (itemExistente.cantidad >= CANTIDAD_MAXIMA) return;
         itemExistente.cantidad++;
     } else {
         carrito.push({
@@ -126,8 +148,9 @@ function eliminarDelCarrito(index) {
 }
 
 function cambiarCantidad(index, delta) {
-    if (carrito[index].cantidad + delta > 0) {
-        carrito[index].cantidad += delta;
+    const nuevaCantidad = carrito[index].cantidad + delta;
+    if (nuevaCantidad > 0 && nuevaCantidad <= CANTIDAD_MAXIMA) {
+        carrito[index].cantidad = nuevaCantidad;
         guardarCarrito();
         actualizarVistaCarrito();
         actualizarBadgeCarrito();
@@ -136,6 +159,30 @@ function cambiarCantidad(index, delta) {
 
 function guardarCarrito() {
     localStorage.setItem("carrito_elmejenguero", JSON.stringify(carrito));
+}
+
+// El precio, el nombre y la imagen se toman del catálogo, nunca de localStorage.
+function reconciliarCarrito() {
+    const antes = JSON.stringify(carrito);
+
+    carrito = carrito.reduce((resultado, item) => {
+        const producto = productos.find((p) => p.id === item.id);
+        // Se descarta si el producto ya no existe o la talla ya no se vende.
+        if (!producto || !obtenerTallas(producto).includes(item.talla)) return resultado;
+
+        resultado.push({
+            ...item,
+            nombre: producto.nombre,
+            precio: producto.precio,
+            imagen: producto.imagen,
+        });
+        return resultado;
+    }, []);
+
+    // Solo se guarda si algo cambió, para no disparar el evento "storage" en otras pestañas.
+    if (JSON.stringify(carrito) !== antes) guardarCarrito();
+    actualizarBadgeCarrito();
+    actualizarVistaCarrito();
 }
 
 function actualizarBadgeCarrito() {
@@ -352,6 +399,8 @@ formCheckout.addEventListener("submit", (e) => {
 // Actualizar también al regresar mediante el historial del navegador.
 function sincronizarCarrito() {
     carrito = cargarCarritoGuardado();
+    // Si el catálogo ya cargó, se vuelve a comparar; si no, lo hará cargarProductos().
+    if (productos.length > 0) reconciliarCarrito();
     actualizarBadgeCarrito();
     actualizarVistaCarrito();
 }
