@@ -1,19 +1,27 @@
 [
   {
     "id": 1,
-    "nombre": " Argentina",
-    "descripcion": "Camiseta Argentina 2022 Campeon del Mundo",
-    "precio": 25000,
+    "nombre": "Argentina",
     "categoria": "Selecciones",
-    "imagen": "img/productos/argentina.jpg"
+    "descripcion": "Camiseta Argentina 2022 · Campeón del Mundo",
+    "precio": 25000,
+    "imagen": "img/productos/argentina.jpg",
+    "tallas": ["S", "M", "L", "XL"],
+    "playerVersion": true,
+    "disponible": true,
+    "destacado": true
   },
   {
     "id": 2,
-    "nombre": " Real  Madrid CF ",
-    "descripcion": "Camiseta Real Madrid  Temporada 2026. Local",
-    "precio": 28000,
+    "nombre": "Real Madrid",
     "categoria": "Clubes",
-    "imagen": "img/productos/real-madrid.jpg"
+    "descripcion": "Camiseta Real Madrid Temporada 2026 · Local",
+    "precio": 28000,
+    "imagen": "img/productos/real-madrid.jpg",
+    "tallas": ["S", "M", "L", "XL"],
+    "playerVersion": true,
+    "disponible": true,
+    "destacado": true
   },
   {
     "id": 3,
@@ -24,7 +32,8 @@
     "imagen": "img/productos/barcelona.jpg",
     "tallas": ["S", "M", "L"],
     "playerVersion": true,
-    "disponible": true
+    "disponible": true,
+    "destacado": true
   },
   {
     "id": 4,
@@ -35,7 +44,8 @@
     "imagen": "img/productos/ac-milan.jpg",
     "tallas": ["M", "L", "XL"],
     "playerVersion": false,
-    "disponible": true
+    "disponible": true,
+    "destacado": true
   },
   {
     "id": 5,
@@ -46,9 +56,9 @@
     "imagen": "img/productos/costa-rica.jpg",
     "tallas": ["S", "M", "L", "XL"],
     "playerVersion": true,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   },
-
   {
     "id": 6,
     "nombre": "Brasil Retro",
@@ -58,7 +68,8 @@
     "imagen": "img/productos/brasil-retro.jpg",
     "tallas": ["S", "M", "L"],
     "playerVersion": false,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   },
   {
     "id": 7,
@@ -69,7 +80,8 @@
     "imagen": "img/productos/italia-retro.jpg",
     "tallas": ["M", "L", "XL"],
     "playerVersion": false,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   },
   {
     "id": 8,
@@ -80,7 +92,8 @@
     "imagen": "img/productos/saprissa.jpg",
     "tallas": ["S", "M", "L", "XL"],
     "playerVersion": false,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   },
   {
     "id": 9,
@@ -91,7 +104,8 @@
     "imagen": "img/productos/lda.jpg",
     "tallas": ["M", "L"],
     "playerVersion": false,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   },
   {
     "id": 10,
@@ -102,7 +116,8 @@
     "imagen": "img/productos/man-city.jpg",
     "tallas": ["S", "M", "L", "XL"],
     "playerVersion": true,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   },
   {
     "id": 11,
@@ -113,7 +128,8 @@
     "imagen": "img/productos/mexico.jpg",
     "tallas": ["S", "M", "L", "XL"],
     "playerVersion": false,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   },
   {
     "id": 12,
@@ -124,6 +140,7 @@
     "imagen": "img/productos/juventus.jpg",
     "tallas": ["S", "M", "L", "XL"],
     "playerVersion": false,
-    "disponible": true
+    "disponible": true,
+    "destacado": false
   }
 ]
