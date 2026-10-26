@@ -89,6 +89,7 @@ btnHamburguesa.addEventListener("click", () => {
 btnCarrito.addEventListener("click", () => {
     modalCarrito.classList.remove("hidden");
     actualizarVistaCarrito();
+    cerrarCarrito.focus();
 });
 
 cerrarCarrito.addEventListener("click", () => {
@@ -325,6 +326,7 @@ btnCheckout.addEventListener("click", () => {
     errorNombre.textContent = "";
     errorCedula.textContent = "";
     errorTelefono.textContent = "";
+    cerrarModalCheckout.focus();
 });
 
 cerrarModalCheckout.addEventListener("click", () => {
@@ -414,3 +416,45 @@ window.addEventListener("storage", (evento) => {
     if (evento.key === "carrito_elmejenguero" || evento.key === null) sincronizarCarrito();
 });
 actualizarBadgeCarrito();
+
+// CIERRE DE MENÚ Y VENTANAS
+function cerrarMenu() {
+    sidebarMenu.classList.add("hidden");
+    sidebarMenu.classList.remove("flex");
+    btnHamburguesa.setAttribute("aria-expanded", "false");
+}
+
+// Esc cierra solo la ventana que está arriba de todas.
+document.addEventListener("keydown", (evento) => {
+    if (evento.key !== "Escape") return;
+    if (!modalCheckout.classList.contains("hidden")) {
+        modalCheckout.classList.add("hidden");
+    } else if (!modalCarrito.classList.contains("hidden")) {
+        modalCarrito.classList.add("hidden");
+    } else {
+        cerrarMenu();
+    }
+});
+
+// Clic fuera del menú lo cierra (el botón hamburguesa tiene su propio toggle).
+document.addEventListener("click", (evento) => {
+    if (sidebarMenu.classList.contains("hidden")) return;
+    if (sidebarMenu.contains(evento.target) || btnHamburguesa.contains(evento.target)) return;
+    cerrarMenu();
+});
+
+// Clic en el fondo oscuro cierra el carrito (el checkout ya lo hacía).
+modalCarrito.addEventListener("click", (evento) => {
+    if (evento.target === modalCarrito) modalCarrito.classList.add("hidden");
+});
+
+// Con el carrito o el checkout abiertos, la página de fondo no debe moverse.
+function actualizarBloqueoScroll() {
+    const hayVentanaAbierta =
+        !modalCarrito.classList.contains("hidden") || !modalCheckout.classList.contains("hidden");
+    document.body.classList.toggle("overflow-hidden", hayVentanaAbierta);
+}
+const observadorVentanas = new MutationObserver(actualizarBloqueoScroll);
+[modalCarrito, modalCheckout].forEach((ventana) => {
+    observadorVentanas.observe(ventana, { attributes: true, attributeFilter: ["class"] });
+});
