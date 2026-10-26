@@ -1,11 +1,11 @@
-# Backend de El Mejengero CR
+# Backend de El Mejenguero CR
 
 Avance del Proyecto 2 para el Laboratorio 4 de Programación III.
-Repositorio: https://github.com/The-Engineer545/El_Mejengero_CR_website
+Repositorio: https://github.com/The-Engineer545/El_Mejenguero_CR_website
 
 ## Instalar y ejecutar
 
-1. Abrir la carpeta `El_Mejengero_CR_website` en VS Code.
+1. Abrir la carpeta `El_Mejenguero_CR_website` en VS Code.
 2. En la terminal de la raíz ejecutar:
 
 ```bash
