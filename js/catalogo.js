@@ -1,42 +1,84 @@
 const productosGrid = document.querySelector("#productos-grid");
 const buscadorProductos = document.querySelector("#buscadorProductos");
+const btnLimpiarFiltros = document.querySelector("#btnLimpiarFiltros");
 const botonesCategoria = document.querySelectorAll(".btn-categoria");
 let categoriaActual = filtrosDeURL().categoria;
 let catalogoCargado = false;
 buscadorProductos.value = filtrosDeURL().q;
 
+function normalizarTexto(texto) {
+    return (texto || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+}
+
+function limpiarFiltros() {
+    if (buscadorProductos) buscadorProductos.value = "";
+    categoriaActual = "todas";
+    actualizarFiltros();
+}
+
 function filtrarProductos() {
-    const textoBusqueda = buscadorProductos ? buscadorProductos.value.toLowerCase() : "";
+    const textoBusqueda = buscadorProductos ? normalizarTexto(buscadorProductos.value) : "";
 
     const productosFiltrados = productos.filter((producto) => {
         const coincideCategoria =
             categoriaActual === "todas" ||
-            producto.categoria.trim().toLowerCase() === categoriaActual.trim().toLowerCase();
+            categoriaActual === "novedades" ||
+            normalizarTexto(producto.categoria) === normalizarTexto(categoriaActual);
         const coincideTexto =
-            producto.nombre.toLowerCase().includes(textoBusqueda) ||
-            producto.descripcion.toLowerCase().includes(textoBusqueda);
+            normalizarTexto(producto.nombre).includes(textoBusqueda) ||
+            normalizarTexto(producto.descripcion).includes(textoBusqueda);
         return coincideCategoria && coincideTexto;
     });
 
     renderizarProductos(productosFiltrados);
 
     if (productosFiltrados.length === 0) {
+        const contenedorVacio = document.createElement("div");
+        contenedorVacio.className = "col-span-full text-center py-12 flex flex-col items-center justify-center";
+
         const mensaje = document.createElement("p");
-        mensaje.className = "col-span-full text-center text-gray-500 py-10 font-bold text-lg";
+        mensaje.className = "text-gray-500 font-bold text-lg mb-4";
         mensaje.textContent = "No encontramos camisetas con esos filtros ⚽";
-        productosGrid.appendChild(mensaje);
+
+        const btnLimpiar = document.createElement("button");
+        btnLimpiar.type = "button";
+        btnLimpiar.className =
+            "bg-black text-white px-6 py-2 rounded-full font-bold text-sm hover:bg-gray-800 transition";
+        btnLimpiar.textContent = "Limpiar filtros";
+        btnLimpiar.addEventListener("click", limpiarFiltros);
+
+        contenedorVacio.appendChild(mensaje);
+        contenedorVacio.appendChild(btnLimpiar);
+        productosGrid.appendChild(contenedorVacio);
     }
 }
 
 function actualizarFiltros() {
     const parametros = new URLSearchParams();
-    if (categoriaActual !== "todas") parametros.set("categoria", categoriaActual);
+    if (categoriaActual !== "todas" && categoriaActual !== "novedades") {
+        parametros.set("categoria", categoriaActual);
+    }
     if (buscadorProductos.value) parametros.set("q", buscadorProductos.value);
     const consulta = parametros.toString();
     // Reemplazar el estado conserva los filtros sin llenar el historial por cada letra.
     history.replaceState(null, "", "catalogo.html" + (consulta ? "?" + consulta : ""));
+
+    const hayFiltrosActivos =
+        (categoriaActual !== "todas" && categoriaActual !== "novedades") ||
+        (buscadorProductos && buscadorProductos.value.trim() !== "");
+    if (btnLimpiarFiltros) {
+        btnLimpiarFiltros.classList.toggle("hidden", !hayFiltrosActivos);
+    }
+
     botonesCategoria.forEach((boton) => {
-        const activo = boton.dataset.categoria === categoriaActual;
+        const catBoton = boton.dataset.categoria;
+        const activo =
+            catBoton === categoriaActual ||
+            ((categoriaActual === "todas" || categoriaActual === "novedades") &&
+                (catBoton === "todas" || catBoton === "novedades"));
         boton.classList.toggle("font-bold", activo);
         boton.classList.toggle("text-black", activo);
         if (activo) boton.setAttribute("aria-current", "true");
@@ -45,7 +87,11 @@ function actualizarFiltros() {
     if (catalogoCargado) filtrarProductos();
 }
 
+if (btnLimpiarFiltros) {
+    btnLimpiarFiltros.addEventListener("click", limpiarFiltros);
+}
 buscadorProductos.addEventListener("input", actualizarFiltros);
+buscadorProductos.addEventListener("search", actualizarFiltros);
 // El formulario también funciona al presionar Enter, sin perder la categoría.
 document.querySelector("#formBusqueda").addEventListener("submit", (evento) => {
     evento.preventDefault();

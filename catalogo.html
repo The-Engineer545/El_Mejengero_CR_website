@@ -98,8 +98,15 @@
                 </div>
                 <form id="formBusqueda" action="catalogo.html" method="get" role="search" class="mb-6 max-w-lg">
                     <label for="buscadorProductos" class="block text-sm font-bold mb-2">Buscar camisetas</label>
-                    <input type="search" id="buscadorProductos" name="q" placeholder="Buscar equipos, selecciones..."
-                        class="w-full bg-white border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-black text-sm">
+                    <div class="flex gap-2 items-center">
+                        <input type="search" id="buscadorProductos" name="q" placeholder="Buscar equipos, selecciones..."
+                            inputmode="search"
+                            class="flex-1 bg-white border border-gray-300 rounded-full py-3 px-4 focus:outline-none focus:ring-2 focus:ring-black text-sm">
+                        <button type="button" id="btnLimpiarFiltros"
+                            class="hidden px-4 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-full text-sm font-bold transition whitespace-nowrap">
+                            Limpiar filtros
+                        </button>
+                    </div>
                 </form>
                 <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     <p class="col-span-full text-center text-gray-500 py-10">Cargando productos...</p>
@@ -187,6 +194,7 @@
                     <label for="inputCedula" class="block text-xs font-bold uppercase text-gray-500 mb-1">Cédula (9
                         dígitos)</label>
                     <input type="text" id="inputCedula" required maxlength="9" placeholder="Ej: 123456789"
+                        inputmode="numeric"
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
                     <p id="errorCedula" class="text-red-500 text-xs mt-1 font-semibold"></p>
                 </div>
@@ -196,6 +204,7 @@
                     <label for="inputTelefono" class="block text-xs font-bold uppercase text-gray-500 mb-1">Teléfono CR
                         (8 dígitos)</label>
                     <input type="text" id="inputTelefono" required maxlength="8" placeholder="Ej: 63425133"
+                        inputmode="tel"
                         class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black">
                     <p id="errorTelefono" class="text-red-500 text-xs mt-1 font-semibold"></p>
                 </div>
