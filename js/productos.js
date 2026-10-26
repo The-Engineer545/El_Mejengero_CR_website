@@ -19,9 +19,11 @@ function mostrarErrorProductos(contenedor) {
 
 function filtrosDeURL() {
     const parametros = new URLSearchParams(window.location.search);
-    const categoria = (parametros.get("categoria") || "todas").trim().toLowerCase();
+    const catRaw = (parametros.get("categoria") || "todas").trim().toLowerCase();
+    const catNormalizada = catRaw === "novedades" ? "todas" : catRaw;
+    const categoriasValidas = ["todas", "nacionales", "selecciones", "clubes", "retro"];
     return {
-        categoria: ["todas", "nacionales", "selecciones", "clubes", "retro"].includes(categoria) ? categoria : "todas",
+        categoria: categoriasValidas.includes(catNormalizada) ? catNormalizada : "todas",
         q: parametros.get("q") || ""
     };
 }
@@ -29,7 +31,9 @@ function filtrosDeURL() {
 function parametrosFiltros() {
     const filtros = filtrosDeURL();
     const parametros = new URLSearchParams();
-    if (filtros.categoria !== "todas") parametros.set("categoria", filtros.categoria);
+    if (filtros.categoria !== "todas" && filtros.categoria !== "novedades") {
+        parametros.set("categoria", filtros.categoria);
+    }
     if (filtros.q) parametros.set("q", filtros.q);
     return parametros;
 }
@@ -60,7 +64,7 @@ function renderizarProductos(listaProductos) {
         img.src = producto.imagen;
         img.alt = producto.nombre;
         img.className =
-            "object-cover w-full h-full mix-blend-multiply group-hover:scale-110 transition-transform duration-300";
+            "object-contain w-full h-full mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.04] group-hover:-rotate-2";
 
         const spanCategoria = document.createElement("span");
         spanCategoria.className =
