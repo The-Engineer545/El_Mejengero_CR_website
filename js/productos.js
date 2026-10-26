@@ -112,6 +112,7 @@ function renderizarProductos(listaProductos) {
         const img = document.createElement("img");
         img.src = producto.imagen;
         img.alt = producto.nombre;
+        img.loading = "lazy";
         img.className =
             "object-contain w-full h-full mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.04] group-hover:-rotate-2";
 
