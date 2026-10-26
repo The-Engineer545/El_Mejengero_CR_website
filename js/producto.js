@@ -26,6 +26,14 @@ async function iniciarProducto() {
             return;
         }
         document.title = producto.nombre.trim() + " | El Mejenguero CR";
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) {
+            metaDesc.setAttribute("content", `${producto.nombre} - ${producto.descripcion}. Disponible en El Mejenguero CR.`);
+        }
+        const ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute("content", `${producto.nombre} | El Mejenguero CR`);
+        const ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.setAttribute("content", producto.descripcion);
         document.querySelector("#productoImagen").src = producto.imagen;
         document.querySelector("#productoImagen").alt = producto.nombre;
         document.querySelector("#productoCategoria").textContent = producto.categoria;
