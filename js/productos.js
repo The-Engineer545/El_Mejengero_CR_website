@@ -8,13 +8,62 @@ async function cargarProductos() {
     return productos;
 }
 
-function mostrarErrorProductos(contenedor) {
+function mostrarErrorProductos(contenedor, reintentarCallback = null) {
     contenedor.replaceChildren();
+
+    const wrapper = document.createElement("div");
+    wrapper.className =
+        "col-span-full text-center py-10 px-4 flex flex-col items-center justify-center space-y-4";
+    wrapper.setAttribute("role", "alert");
+
+    const icono = document.createElement("span");
+    icono.className = "text-4xl";
+    icono.textContent = "⚠️";
+
     const mensaje = document.createElement("p");
-    mensaje.className = "text-red-500 col-span-full font-bold text-center py-10";
-    mensaje.setAttribute("role", "alert");
-    mensaje.textContent = 'No pudimos cargar los productos. Recargá la página. Si estás trabajando localmente, abrí el proyecto con Live Server.';
-    contenedor.appendChild(mensaje);
+    mensaje.className = "text-red-600 font-bold text-base max-w-xl mx-auto";
+
+    if (window.location.protocol === "file:") {
+        mensaje.textContent =
+            "No pudimos cargar los productos porque la página se abrió directamente desde los archivos locales (file://). Los navegadores bloquean la lectura de datos por seguridad. Por favor, abrí el proyecto con Live Server en VS Code o ejecutá un servidor local (ej: npx http-server).";
+    } else {
+        mensaje.textContent =
+            "No pudimos cargar los productos. Verificá que el servidor local esté activo y recargá la página.";
+    }
+
+    wrapper.appendChild(icono);
+    wrapper.appendChild(mensaje);
+
+    if (typeof reintentarCallback === "function") {
+        const btnReintentar = document.createElement("button");
+        btnReintentar.type = "button";
+        btnReintentar.className =
+            "bg-black text-white px-6 py-2.5 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-gray-800 transition cursor-pointer";
+        btnReintentar.textContent = "Reintentar";
+        btnReintentar.addEventListener("click", () => {
+            wrapper.replaceChildren();
+            const cargando = document.createElement("p");
+            cargando.className = "text-gray-500 py-4 font-semibold";
+            cargando.textContent = "Cargando productos...";
+            wrapper.appendChild(cargando);
+            reintentarCallback();
+        });
+        wrapper.appendChild(btnReintentar);
+    }
+
+    contenedor.appendChild(wrapper);
+}
+
+function mostrarCatalogoVacio(contenedor, mensajePersonalizado = null) {
+    contenedor.replaceChildren();
+    const wrapper = document.createElement("div");
+    wrapper.className = "col-span-full text-center py-12 flex flex-col items-center justify-center";
+    const mensaje = document.createElement("p");
+    mensaje.className = "text-gray-500 font-bold text-lg";
+    mensaje.textContent =
+        mensajePersonalizado || "No hay camisetas disponibles en el catálogo en este momento ⚽";
+    wrapper.appendChild(mensaje);
+    contenedor.appendChild(wrapper);
 }
 
 function filtrosDeURL() {

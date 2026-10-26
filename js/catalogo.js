@@ -22,6 +22,11 @@ function limpiarFiltros() {
 }
 
 function filtrarProductos() {
+    if (productos.length === 0) {
+        mostrarCatalogoVacio(productosGrid);
+        return;
+    }
+
     const textoBusqueda = buscadorProductos ? normalizarTexto(buscadorProductos.value) : "";
 
     const productosFiltrados = productos.filter((producto) => {
@@ -119,7 +124,7 @@ async function iniciarCatalogo() {
         filtrarProductos();
     } catch (error) {
         console.error(error);
-        mostrarErrorProductos(productosGrid);
+        mostrarErrorProductos(productosGrid, iniciarCatalogo);
     }
 }
 iniciarCatalogo();

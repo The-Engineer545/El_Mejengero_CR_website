@@ -11,9 +11,18 @@ async function iniciarProducto() {
     }
     try {
         await cargarProductos();
+        if (productos.length === 0) {
+            estadoProducto.textContent =
+                "El catálogo está vacío en este momento. Podés volver más tarde.";
+            estadoProducto.classList.remove("hidden");
+            detalleProducto.classList.add("hidden");
+            return;
+        }
         const producto = productos.find((p) => p.id === id);
         if (!producto) {
             estadoProducto.textContent = "Producto no encontrado. Podés volver al catálogo para elegir una camiseta.";
+            estadoProducto.classList.remove("hidden");
+            detalleProducto.classList.add("hidden");
             return;
         }
         document.title = producto.nombre.trim() + " | El Mejenguero CR";
@@ -45,7 +54,9 @@ async function iniciarProducto() {
         detalleProducto.classList.remove("hidden");
     } catch (error) {
         console.error(error);
-        mostrarErrorProductos(estadoProducto);
+        detalleProducto.classList.add("hidden");
+        estadoProducto.classList.remove("hidden");
+        mostrarErrorProductos(estadoProducto, iniciarProducto);
     }
 }
 iniciarProducto();
