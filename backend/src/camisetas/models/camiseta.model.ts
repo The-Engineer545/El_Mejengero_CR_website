@@ -1,11 +1,44 @@
-export interface Camiseta {
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+// Entidad: cada propiedad es una columna de la tabla "camisetas".
+@Entity('camisetas')
+export class Camiseta {
+  @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ length: 100 })
   nombre: string;
+
+  @Column({ length: 255 })
   descripcion: string;
+
+  // MySQL devuelve los DECIMAL como texto; el transformer los pasa a número.
+  @Column('decimal', {
+    precision: 10,
+    scale: 2,
+    transformer: {
+      to: (valor: number) => valor,
+      from: (valor: string) => Number(valor),
+    },
+  })
   precio: number;
+
+  @Column({ length: 50 })
   categoria: string;
+
+  @Column({ length: 255 })
   imagen: string;
-  tallas?: string[];
-  playerVersion?: boolean;
-  disponible?: boolean;
+
+  // Guarda el arreglo como texto JSON, por ejemplo ["S","M","L"].
+  @Column('simple-json')
+  tallas: string[];
+
+  @Column({ default: false })
+  playerVersion: boolean;
+
+  @Column({ default: true })
+  disponible: boolean;
+
+  @Column({ default: false })
+  destacado: boolean;
 }

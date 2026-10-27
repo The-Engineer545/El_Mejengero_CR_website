@@ -5,3 +5,5 @@
 .env.*
 *.log
 *.tsbuildinfo
+# Permite subir la plantilla sin contraseñas
+!.env.example

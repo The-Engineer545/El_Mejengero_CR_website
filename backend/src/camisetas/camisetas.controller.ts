@@ -14,6 +14,11 @@ export class CamisetasController {
     return this.camisetasService.findAll();
   }
 
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.camisetasService.findOne(id);
+  }
+
   @Post()
   create(@Body() datos: CreateCamisetaDto) {
     return this.camisetasService.create(datos);
