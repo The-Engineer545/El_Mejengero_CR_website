@@ -36,4 +36,8 @@ export class CreateCamisetaDto {
   @IsOptional()
   @IsBoolean()
   disponible?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  destacado?: boolean;
 }

@@ -41,4 +41,8 @@ export class UpdateCamisetaDto {
   @IsOptional()
   @IsBoolean()
   disponible?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  destacado?: boolean;
 }
