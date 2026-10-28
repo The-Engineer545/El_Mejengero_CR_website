@@ -1,117 +1,236 @@
 # El Mejenguero CR
 
-El Mejenguero CR es una tienda en línea (e-commerce) dedicada a la venta de camisetas de fútbol en Costa Rica. Ofrece una amplia variedad de opciones, incluyendo camisetas de selecciones nacionales, clubes europeos, equipos nacionales y ediciones retro/clásicas en versiones fan y player.
+Tienda en línea de camisetas de fútbol en Costa Rica. Vende camisetas de selecciones, clubes europeos, equipos nacionales y ediciones retro, en versión Fan y Player. El cliente arma su carrito y el pedido llega a la tienda por WhatsApp.
 
-Este proyecto web está diseñado para brindar una experiencia de usuario rápida y amigable, con un catálogo interactivo, carrito de compras integrado y un proceso de compra que redirige los pedidos directamente a través de WhatsApp.
+El proyecto tiene dos partes que viven en este mismo repositorio:
 
-## 🚀 Proyecto en Vivo (Prueba)
+- **Frontend:** sitio estático en HTML, JavaScript y Tailwind CSS, publicado en Firebase Hosting.
+- **Backend:** API en NestJS con base de datos MySQL (TiDB Cloud) y login de administrador con JWT.
 
-Puedes ver el proyecto y probar todas sus funcionalidades en vivo aquí:
-**[El Mejenguero CR - Firebase Hosting](https://el-mejenguero-cr.web.app/)**
+## Proyecto en vivo
 
-El sitio publicado solo cambia cuando los cambios se fusionan en `main` y se vuelven a publicar con Firebase.
+**[el-mejenguero-cr.web.app](https://el-mejenguero-cr.web.app/)**
 
-## Características Principales
+El sitio publicado solo cambia cuando los cambios se fusionan en `main` y se vuelven a publicar con Firebase. El backend todavía no está publicado; por ahora corre en local.
 
-*   **Catálogo de Productos Dinámico:** Los productos se cargan desde `data/productos.json`, lo que facilita actualizar el inventario sin modificar el código HTML.
-*   **Filtrado por Categorías:** Los usuarios pueden filtrar las camisetas por "Nacionales", "Selecciones", "Clubes Europeos" y "Retro / Clásicas". Los filtros se conservan en la URL, así que un enlace con `?categoria=` y `?q=` se puede compartir.
-*   **Búsqueda Integrada:** Busca equipos o camisetas sin importar tildes, mayúsculas ni espacios de más (por ejemplo, `mexico` encuentra "México"). Incluye un botón "Limpiar filtros".
-*   **Disponibilidad:** Cada camiseta puede marcarse como agotada con `"disponible": false` en el JSON. En ese caso el botón dice "Agotada" y no se puede comprar. Si el campo falta, la camiseta se considera disponible.
-*   **Carrito de Compras:** Permite agregar productos por talla, cambiar cantidades (máximo 10 por talla), ver el total y eliminar artículos. El carrito se guarda en el navegador (`localStorage`) y se valida al cargar: el precio, el nombre y la imagen siempre se toman del catálogo, y se descartan los productos agotados, inexistentes o con tallas que ya no se venden.
-*   **Integración con WhatsApp:** El "checkout" recopila nombre, cédula (9 dígitos) y teléfono (8 dígitos), y genera un mensaje preformateado para enviar el pedido al WhatsApp de la tienda.
-*   **Diseño Responsivo y Accesible:** Funciona en celulares, tablets y computadoras (Tailwind CSS). El menú, el carrito y el formulario de compra se cierran con `Esc` o haciendo clic afuera, y están marcados como diálogos para lectores de pantalla.
+## Estado del proyecto
 
-## Tecnologías Utilizadas
+| Parte | Estado |
+|---|---|
+| Tienda: inicio, catálogo, detalle, carrito y pedido por WhatsApp | ✅ Listo |
+| API de camisetas con base de datos | ✅ Listo |
+| Login de administrador y protección de las operaciones de escritura | ✅ Listo |
+| Frontend leyendo el catálogo desde la API | ⏳ Pendiente (hoy lee `data/productos.json`) |
+| Panel del administrador (`admin.html`) | ⏳ Pendiente |
+| Publicación del backend | ⏳ Pendiente |
 
-*   **HTML5:** Estructura semántica de las páginas (`index.html`, `catalogo.html`, `producto.html`).
-*   **JavaScript (Vanilla):** Lógica del lado del cliente para manejar el catálogo, el carrito, las interacciones del usuario y la conexión con WhatsApp.
-*   **Tailwind CSS:** Framework de CSS utilizado a través de su CDN para un diseño rápido, moderno y completamente responsivo.
-*   **JSON:** Almacenamiento de los datos de los productos (`data/productos.json`).
-*   **Firebase Hosting:** Publicación del sitio de prueba (`firebase.json`).
-*   **NestJS (backend, en desarrollo):** API de camisetas del Laboratorio 4, descrita en la sección [Backend](#backend-en-desarrollo).
+## Arquitectura
 
-## Estructura del Proyecto
+```mermaid
+flowchart LR
+    C[Cliente en el navegador] --> F[Frontend<br/>Firebase Hosting]
+    F -. pendiente .-> A[API NestJS<br/>backend/]
+    D[Dueño de la tienda] -. panel pendiente .-> A
+    A --> B[(TiDB Cloud<br/>MySQL)]
+    F --> W[WhatsApp de la tienda]
+```
 
-*   `index.html`: Página de inicio con banner y productos destacados.
-*   `catalogo.html`: Página principal de la tienda donde se muestran todos los productos, la búsqueda y los filtros.
-*   `producto.html`: Página de detalle de un producto (`?id=`), con talla, versión Player y disponibilidad.
-*   `js/`: Carpeta que contiene los scripts de JavaScript.
-    *   `app.js`: Lógica general: menú, carrito, `localStorage`, ventanas (carrito y checkout) y mensaje de WhatsApp.
-    *   `productos.js`: Lógica compartida para cargar el catálogo, mostrar errores y dibujar las tarjetas.
-    *   `catalogo.js`: Lógica específica del catálogo (filtros, búsqueda y "Limpiar filtros").
-    *   `inicio.js`: Lógica de la página de inicio (productos destacados).
-    *   `producto.js`: Lógica de la página de detalle de un producto.
-*   `data/`: Carpeta que contiene los datos.
-    *   `productos.json`: Catálogo de productos en formato JSON.
-*   `img/productos/`: Fotos locales de las camisetas. El banner de la página de inicio usa una imagen externa de Unsplash.
-*   `firebase.json`: Configuración de Firebase Hosting (ignora la carpeta `backend/`).
-*   `backend/`: API en NestJS (ver la sección de Backend).
+- Los clientes **leen** el catálogo sin iniciar sesión.
+- Solo el administrador puede **crear, editar o eliminar** camisetas, con un token que obtiene al iniciar sesión.
+- Las fotos están en `img/productos/` y la base de datos solo guarda su ruta.
 
-## Cómo Agregar o Editar una Camiseta
+## Funciones de la tienda
 
-Edita `data/productos.json`. Cada camiseta tiene esta forma:
+- **Catálogo con filtros y búsqueda:** por categoría (Nacionales, Selecciones, Clubes y Retro) y por texto, sin importar tildes, mayúsculas ni espacios de más. Los filtros quedan en la URL (`?categoria=` y `?q=`), así que el enlace se puede compartir. Incluye un botón "Limpiar filtros".
+- **Destacados:** el inicio muestra las camisetas marcadas como `destacado`. Si ninguna lo está, muestra las primeras cuatro.
+- **Detalle de producto:** `producto.html?id=` muestra tallas, versión Player y disponibilidad.
+- **Disponibilidad:** una camiseta con `disponible: false` aparece como "Agotada" y no se puede comprar. Sin tallas, el botón dice "Tallas pendientes".
+- **Carrito:** por talla, con un máximo de 10 unidades por talla. Se guarda en el navegador (`localStorage`) y se valida al cargar: el precio, el nombre y la imagen se toman siempre del catálogo, y se descartan productos agotados, inexistentes o con tallas que ya no se venden.
+- **Pedido por WhatsApp:** pide nombre, cédula (9 dígitos) y teléfono (8 dígitos), y arma un mensaje con el detalle del pedido para el WhatsApp de la tienda.
+- **Responsivo y accesible:** funciona en celular, tablet y computadora. El menú, el carrito y el formulario se cierran con `Esc` o con clic afuera, y están marcados como diálogos para lectores de pantalla.
+
+## API del backend
+
+Base local: `http://localhost:3000`
+
+| Método | Ruta | Acceso | Qué hace |
+|---|---|---|---|
+| `GET` | `/camisetas` | Público | Lista todas las camisetas |
+| `GET` | `/camisetas/:id` | Público | Devuelve una camiseta (404 si no existe) |
+| `POST` | `/auth/login` | Público | Recibe `usuario` y `contrasena`; devuelve `access_token` |
+| `POST` | `/camisetas` | 🔒 Administrador | Crea una camiseta |
+| `PATCH` | `/camisetas/:id` | 🔒 Administrador | Modifica solo los campos enviados |
+| `DELETE` | `/camisetas/:id` | 🔒 Administrador | Elimina una camiseta |
+
+Las rutas 🔒 necesitan el encabezado `Authorization: Bearer <access_token>`. Sin token, o con un token alterado o vencido, responden **401**. Los datos inválidos responden **400**.
+
+**Ejemplo de login:**
 
 ```json
+POST /auth/login
 {
-  "id": 14,
-  "nombre": "Costa Rica",
-  "categoria": "Selecciones",
-  "descripcion": "Selección Nacional · Local",
-  "precio": 18000,
-  "imagen": "img/productos/costa-rica.jpg",
-  "tallas": ["S", "M", "L", "XL"],
-  "playerVersion": false,
-  "disponible": true,
-  "destacado": false
+  "usuario": "admin",
+  "contrasena": "tu-contraseña"
 }
 ```
 
-*   `id`: número entero único.
-*   `categoria`: `Selecciones`, `Clubes`, `Nacionales` o `Retro`.
-*   `tallas`: si falta o está vacío, el botón dice "Tallas pendientes" y no se puede comprar.
-*   `disponible`: con `false` la camiseta aparece como "Agotada".
-*   `destacado`: con `true` aparece en el inicio. Si ninguna está marcada, se muestran las primeras cuatro.
+**Ejemplo de cambio de disponibilidad (con token):**
 
-## Cómo Ejecutar el Proyecto Localmente
-
-Debido a que el proyecto carga los productos mediante una petición `fetch()` a un archivo JSON local, **es necesario ejecutarlo a través de un servidor web local**. Si abres el HTML directamente (`file://`), el navegador bloquea la lectura del JSON y el sitio muestra un mensaje de error con el botón "Reintentar".
-
-1.  **Clona o descarga el repositorio:**
-    Obtén los archivos del proyecto en tu computadora.
-
-2.  **Usa un servidor local.** La opción recomendada, con Node.js instalado, es ejecutar en la terminal, dentro de la carpeta donde está `index.html`:
-
-    ```bash
-    npx http-server -c-1
-    ```
-
-    Luego abre `http://localhost:8080` en tu navegador.
-
-    **Importante:** el `-c-1` desactiva la caché. Sin esa bandera, `http-server` le dice al navegador que guarde los archivos durante 1 hora, y puedes seguir viendo un `app.js` viejo aunque ya lo hayas cambiado. Después de editar, usa `Ctrl+Shift+R` para recargar sin caché.
-
-    Otras opciones:
-    *   **VS Code con Live Server:** Instala la extensión "Live Server", haz clic derecho sobre `index.html` y selecciona "Open with Live Server".
-    *   **Python:** Ejecuta `python3 -m http.server` en la carpeta del proyecto.
-
-3.  **¡Listo!** Explora la tienda, prueba el carrito y los filtros.
-
-## Backend (en desarrollo)
-
-La carpeta `backend/` contiene una API de camisetas hecha con NestJS para el Laboratorio 4 de Programación III. **El sitio todavía no la usa:** el frontend lee `data/productos.json`.
-
-Para ejecutarla:
-
-```bash
-cd backend
-npm ci
-npm run build
-npm run start:dev
+```json
+PATCH /camisetas/1
+{ "disponible": false }
 ```
 
-La API queda en `http://localhost:3000/camisetas`. Por ahora los datos se guardan en memoria y se pierden al reiniciar el servidor. Los endpoints, las pruebas de Postman y las versiones de Node y npm están en [`backend/README.md`](backend/README.md).
+### Campos de una camiseta
 
-## Pendiente
+| Campo | Tipo | Notas |
+|---|---|---|
+| `id` | número | Lo genera la base de datos |
+| `nombre` | texto | Obligatorio |
+| `descripcion` | texto | Obligatorio |
+| `precio` | número | Obligatorio, en colones, mayor que 0 |
+| `categoria` | texto | `Selecciones`, `Clubes`, `Nacionales` o `Retro` |
+| `imagen` | texto | Ruta de la foto, por ejemplo `img/productos/costa-rica.jpg` |
+| `tallas` | lista de texto | Opcional; por defecto `[]` |
+| `playerVersion` | sí/no | Opcional; por defecto `false` |
+| `disponible` | sí/no | Opcional; por defecto `true` |
+| `destacado` | sí/no | Opcional; por defecto `false` |
 
-*   Conectar el frontend con la API del backend.
-*   Reemplazar el almacenamiento en memoria por una base de datos.
-*   Consulta individual de una camiseta (`GET /camisetas/:id`) y protección de las operaciones administrativas.
+### Seguridad
+
+- **Contraseña del administrador:** se guarda como hash bcrypt, nunca en texto plano ni en el repositorio.
+- **Token JWT:** dura 8 horas y va firmado con `JWT_SECRET`. No contiene la contraseña.
+- **Login:** usuario malo y contraseña mala devuelven el mismo mensaje, para no revelar cuál dato falló.
+- **Credenciales:** viven en `backend/.env`, que Git ignora. El repositorio solo incluye la plantilla `backend/.env.example`.
+- **CORS:** solo los orígenes listados en `CORS_ORIGINS` pueden leer la API desde el navegador.
+
+## Tecnologías
+
+| Parte | Tecnologías |
+|---|---|
+| Frontend | HTML5, JavaScript sin frameworks, Tailwind CSS (CDN) |
+| Backend | NestJS 12, TypeScript, class-validator |
+| Base de datos | TiDB Cloud Starter (compatible con MySQL), TypeORM, mysql2 |
+| Autenticación | JWT (`@nestjs/jwt`) y bcrypt (`bcryptjs`) |
+| Publicación | Firebase Hosting (frontend) |
+
+## Estructura del proyecto
+
+```
+├── index.html              Inicio con banner y destacados
+├── catalogo.html           Catálogo con búsqueda y filtros
+├── producto.html           Detalle de un producto (?id=)
+├── js/
+│   ├── app.js              Menú, carrito, ventanas y mensaje de WhatsApp
+│   ├── productos.js        Carga del catálogo, errores y tarjetas
+│   ├── catalogo.js         Filtros y búsqueda
+│   ├── inicio.js           Destacados del inicio
+│   └── producto.js         Página de detalle
+├── data/productos.json     Catálogo que usa hoy el frontend
+├── img/productos/          Fotos de las camisetas
+├── firebase.json           Configuración de Firebase Hosting
+└── backend/
+    ├── .env.example        Plantilla de variables de entorno (sin secretos)
+    ├── scripts/
+    │   └── generar-secretos.js   Crea el hash de la contraseña y JWT_SECRET
+    ├── src/
+    │   ├── main.ts               Arranque, validación global y CORS
+    │   ├── app.module.ts         Conexión a la base de datos y módulos
+    │   ├── auth/                 Login, servicio JWT y guard
+    │   └── camisetas/
+    │       ├── models/           Entidad Camiseta (tabla camisetas)
+    │       ├── dto/              Validación de lo que entra a la API
+    │       ├── seed/             12 camisetas que se cargan si la tabla está vacía
+    │       ├── camisetas.controller.ts
+    │       └── camisetas.service.ts
+    ├── postman/            Colección de pruebas del Laboratorio 4
+    └── evidencias/         Capturas de las pruebas del Laboratorio 4
+```
+
+## Cómo ejecutar el proyecto
+
+### Frontend
+
+El catálogo se carga con `fetch()`, así que el sitio necesita un servidor local. Si abres el HTML directamente (`file://`), el navegador bloquea la lectura y aparece un mensaje de error con el botón "Reintentar".
+
+En la raíz del proyecto:
+
+```bash
+npx http-server -c-1
+```
+
+Abre **`http://localhost:8080`**. Usa `localhost` y no la IP de tu red: CORS solo permite `localhost:8080` y `127.0.0.1:8080` por defecto.
+
+El `-c-1` desactiva la caché. Sin esa bandera, el navegador puede seguir usando un `.js` viejo durante una hora. Después de editar, recarga con `Ctrl + Shift + R`.
+
+Otras opciones: la extensión **Live Server** de VS Code, o `python -m http.server`.
+
+### Backend
+
+**Requisitos:** Node.js 24 y una base MySQL. El proyecto usa TiDB Cloud Starter, que es gratuito y no pide tarjeta.
+
+1. **Crear la base de datos.** En el SQL Editor de TiDB:
+
+   ```sql
+   CREATE DATABASE mejenguero;
+   ```
+
+2. **Instalar dependencias:**
+
+   ```bash
+   cd backend
+   npm ci
+   ```
+
+3. **Crear el archivo `.env`.** Copia `backend/.env.example` como `backend/.env` y llena los datos de conexión que muestra TiDB en **Connect**.
+
+4. **Generar los secretos del login:**
+
+   ```bash
+   node scripts/generar-secretos.js
+   ```
+
+   Escribe la contraseña del administrador (mínimo 10 caracteres) y copia al `.env` las dos líneas que imprime. Agrega también `ADMIN_USER`.
+
+5. **Arrancar:**
+
+   ```bash
+   npm run start:dev
+   ```
+
+   La primera vez se crea la tabla `camisetas` y se cargan las 12 camisetas iniciales. Si la tabla ya tiene datos, no se tocan.
+
+6. **Verificar:** `http://localhost:3000/camisetas` muestra el catálogo en formato JSON.
+
+### Variables de entorno (`backend/.env`)
+
+| Variable | Para qué sirve |
+|---|---|
+| `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME` | Conexión a la base de datos |
+| `ADMIN_USER` | Usuario del administrador |
+| `ADMIN_PASSWORD_HASH` | Hash bcrypt de la contraseña del administrador |
+| `JWT_SECRET` | Clave con la que se firman los tokens |
+| `CORS_ORIGINS` | Orígenes permitidos, separados por coma (opcional) |
+
+Si falta una variable obligatoria, el servidor no arranca y muestra cuál falta.
+
+**Nunca subas el `.env` a GitHub.** Si una contraseña se expone, cámbiala en TiDB o vuelve a ejecutar `generar-secretos.js`.
+
+## Cómo editar el catálogo
+
+**Mientras el frontend no esté conectado a la API**, el sitio publicado lee `data/productos.json`. Para cambiar lo que ven los clientes, edita ese archivo. Los campos son los mismos de la tabla [Campos de una camiseta](#campos-de-una-camiseta).
+
+**En la API**, los cambios se hacen con las rutas 🔒 y el token del administrador. Cuando el frontend lea desde la API, este será el único camino y `productos.json` dejará de usarse.
+
+## Pruebas
+
+- **Laboratorio 4:** la colección de Postman está en `backend/postman/` y las capturas en `backend/evidencias/`. Esas pruebas, descritas en [`backend/README.md`](backend/README.md), corresponden a la versión con datos en memoria.
+- **Login:** sin token → 401; contraseña mala → 401; login correcto → token; `PATCH` con token → 200; token alterado → 401; `GET` sin token → 200.
+
+## Próximos pasos
+
+- Conectar el frontend a la API con una sola variable `API_URL`.
+- Panel `admin.html` para que el dueño inicie sesión, marque camisetas como agotadas y edite el catálogo.
+- Publicar el backend y agregar el dominio de Firebase a `CORS_ORIGINS`.
+- Página `info.html` con guía de tallas, envíos, pagos y cambios.
+- Limitar los intentos de login para frenar ataques de fuerza bruta.
