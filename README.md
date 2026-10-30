@@ -5,13 +5,13 @@ Tienda en línea de camisetas de fútbol en Costa Rica. Vende camisetas de selec
 El proyecto tiene dos partes que viven en este mismo repositorio:
 
 - **Frontend:** sitio estático en HTML, JavaScript y Tailwind CSS, publicado en Firebase Hosting.
-- **Backend:** API en NestJS con base de datos MySQL (TiDB Cloud) y login de administrador con JWT.
+- **Backend:** API en NestJS con base de datos MySQL (TiDB Cloud) y login de administrador con JWT. Su documentación propia está en **[`backend/README.md`](backend/README.md)**.
 
 ## Proyecto en vivo
 
 **[el-mejenguero-cr.web.app](https://el-mejenguero-cr.web.app/)**
 
-El sitio publicado solo cambia cuando los cambios se fusionan en `main` y se vuelven a publicar con Firebase. El backend todavía no está publicado; por ahora corre en local.
+El sitio publicado solo cambia cuando los cambios se fusionan en `main` y se vuelven a publicar con Firebase. El backend está publicado en Render y la base de datos en TiDB Cloud.
 
 ## Estado del proyecto
 
@@ -20,17 +20,17 @@ El sitio publicado solo cambia cuando los cambios se fusionan en `main` y se vue
 | Tienda: inicio, catálogo, detalle, carrito y pedido por WhatsApp | ✅ Listo |
 | API de camisetas con base de datos | ✅ Listo |
 | Login de administrador y protección de las operaciones de escritura | ✅ Listo |
-| Frontend leyendo el catálogo desde la API | ⏳ Pendiente (hoy lee `data/productos.json`) |
-| Panel del administrador (`admin.html`) | ⏳ Pendiente |
-| Publicación del backend | ⏳ Pendiente |
+| Frontend leyendo el catálogo desde la API | ✅ Listo |
+| Panel del administrador (`admin.html`) | ✅ Listo |
+| Publicación del backend | ✅ Listo (Render) |
 
 ## Arquitectura
 
 ```mermaid
 flowchart LR
     C[Cliente en el navegador] --> F[Frontend<br/>Firebase Hosting]
-    F -. pendiente .-> A[API NestJS<br/>backend/]
-    D[Dueño de la tienda] -. panel pendiente .-> A
+    F --> A[API NestJS<br/>Render]
+    D[Dueño de la tienda] --> P[Panel admin.html] --> A
     A --> B[(TiDB Cloud<br/>MySQL)]
     F --> W[WhatsApp de la tienda]
 ```
@@ -51,7 +51,10 @@ flowchart LR
 
 ## API del backend
 
-Base local: `http://localhost:3000`
+> Detalles de instalación, estructura y pruebas del servidor en **[`backend/README.md`](backend/README.md)**.
+
+- En producción: `https://el-mejenguero-cr-website.onrender.com`
+- En local: `http://localhost:3000`
 
 | Método | Ruta | Acceso | Qué hace |
 |---|---|---|---|
@@ -112,7 +115,7 @@ PATCH /camisetas/1
 | Backend | NestJS 12, TypeScript, class-validator |
 | Base de datos | TiDB Cloud Starter (compatible con MySQL), TypeORM, mysql2 |
 | Autenticación | JWT (`@nestjs/jwt`) y bcrypt (`bcryptjs`) |
-| Publicación | Firebase Hosting (frontend) |
+| Publicación | Firebase Hosting (frontend) y Render (backend) |
 
 ## Estructura del proyecto
 
@@ -120,13 +123,15 @@ PATCH /camisetas/1
 ├── index.html              Inicio con banner y destacados
 ├── catalogo.html           Catálogo con búsqueda y filtros
 ├── producto.html           Detalle de un producto (?id=)
+├── admin.html              Panel del administrador
 ├── js/
+│   ├── config.js           Dirección de la API (API_URL)
 │   ├── app.js              Menú, carrito, ventanas y mensaje de WhatsApp
-│   ├── productos.js        Carga del catálogo, errores y tarjetas
+│   ├── productos.js        Carga del catálogo desde la API, errores y tarjetas
 │   ├── catalogo.js         Filtros y búsqueda
 │   ├── inicio.js           Destacados del inicio
-│   └── producto.js         Página de detalle
-├── data/productos.json     Catálogo que usa hoy el frontend
+│   ├── producto.js         Página de detalle
+│   └── admin.js            Panel: login, lista y edición del catálogo
 ├── img/productos/          Fotos de las camisetas
 ├── firebase.json           Configuración de Firebase Hosting
 └── backend/
@@ -218,9 +223,9 @@ Si falta una variable obligatoria, el servidor no arranca y muestra cuál falta.
 
 ## Cómo editar el catálogo
 
-**Mientras el frontend no esté conectado a la API**, el sitio publicado lee `data/productos.json`. Para cambiar lo que ven los clientes, edita ese archivo. Los campos son los mismos de la tabla [Campos de una camiseta](#campos-de-una-camiseta).
+El dueño entra a `admin.html`, inicia sesión y desde ahí marca camisetas como agotadas, las edita, crea nuevas o las elimina. Esos cambios usan las rutas 🔒 de la API con el token del administrador y se guardan en la base de datos.
 
-**En la API**, los cambios se hacen con las rutas 🔒 y el token del administrador. Cuando el frontend lea desde la API, este será el único camino y `productos.json` dejará de usarse.
+La dirección de la API vive en un solo lugar: `js/config.js` (la variable `API_URL`). Para cambiar entre el backend local y el de producción, se edita solo esa línea.
 
 ## Pruebas
 
@@ -229,8 +234,6 @@ Si falta una variable obligatoria, el servidor no arranca y muestra cuál falta.
 
 ## Próximos pasos
 
-- Conectar el frontend a la API con una sola variable `API_URL`.
-- Panel `admin.html` para que el dueño inicie sesión, marque camisetas como agotadas y edite el catálogo.
-- Publicar el backend y agregar el dominio de Firebase a `CORS_ORIGINS`.
 - Página `info.html` con guía de tallas, envíos, pagos y cambios.
 - Limitar los intentos de login para frenar ataques de fuerza bruta.
+- Registro de pedidos y subir fotos desde el panel.
