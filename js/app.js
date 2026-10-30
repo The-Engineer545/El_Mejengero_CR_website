@@ -396,11 +396,19 @@ formCheckout.addEventListener("submit", (e) => {
     mensaje += `\u{1F4B0} *TOTAL A PAGAR: ₡${total.toLocaleString("es-CR")}*\n\n`;
     mensaje += "Por favor indíquenme los métodos de pago disponibles y opciones de envío. ¡Pura vida!";
 
-    // Abrir WhatsApp no confirma que el cliente envió el mensaje.
-    // Conservar el carrito y sus datos guardados, incluso si se bloquea la ventana.
+    // Abrir WhatsApp con el pedido ya armado.
     modalCheckout.classList.add("hidden");
-
     window.open(`https://api.whatsapp.com/send?phone=${telefonoWA}&text=${encodeURIComponent(mensaje)}`, "_blank");
+
+    // El pedido ya se generó: vaciar el carrito y limpiar el formulario.
+    carrito = [];
+    guardarCarrito();
+    actualizarBadgeCarrito();
+    actualizarVistaCarrito();
+    formCheckout.reset();
+    errorNombre.textContent = "";
+    errorCedula.textContent = "";
+    errorTelefono.textContent = "";
 });
 
 // Actualizar también al regresar mediante el historial del navegador.
