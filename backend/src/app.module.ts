@@ -28,8 +28,11 @@ import { AuthModule } from './auth/auth.module';
         extra: { maxIdle: 1, idleTimeout: 60000 },
         // Registra solas las entidades de cada módulo.
         autoLoadEntities: true,
-        // Crea o ajusta las tablas según las entidades. Solo para desarrollo.
-        synchronize: true,
+        // synchronize crea y ajusta las tablas solas. En TiDB vuelve a recrear
+        // la columna 'imagen' en cada arranque y borra las fotos guardadas, por
+        // eso en producción va apagado. Para preparar una base nueva y vacía,
+        // poner DB_SYNC=true una vez, arrancar, y luego quitarlo.
+        synchronize: config.get<string>('DB_SYNC') === 'true',
       }),
     }),
 
