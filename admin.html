@@ -131,13 +131,18 @@
             </div>
 
             <div class="space-y-1">
-                <label for="campoImagen" class="text-sm font-bold">Imagen (ruta)</label>
+                <label class="text-sm font-bold">Imagen</label>
                 <div class="flex items-center gap-3">
-                    <img id="vistaPreviaImagen" alt="" class="h-14 w-14 rounded-lg object-contain bg-gray-100 border">
-                    <input id="campoImagen" type="text" maxlength="255" required placeholder="img/productos/nombre.jpg"
-                        class="flex-1 border border-gray-300 rounded-lg px-3 py-2">
+                    <img id="vistaPreviaImagen" alt="" class="h-14 w-14 rounded-lg object-contain bg-gray-100 border shrink-0">
+                    <label id="zonaImagen" for="campoArchivoImagen"
+                        class="flex-1 cursor-pointer border-2 border-dashed border-gray-300 rounded-lg px-3 py-3 text-center text-sm text-gray-500 hover:border-gray-400">
+                        Arrastrá una foto aquí o hacé clic para elegirla
+                    </label>
+                    <input id="campoArchivoImagen" type="file" accept="image/*" class="hidden">
                 </div>
-                <p class="text-xs text-gray-500">La foto debe estar en la carpeta <code>img/productos/</code> del sitio.</p>
+                <label for="campoImagen" class="text-xs text-gray-500">O pegá una ruta o dirección de imagen:</label>
+                <input id="campoImagen" type="text" placeholder="img/productos/nombre.jpg"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2">
             </div>
 
             <fieldset class="space-y-1">
