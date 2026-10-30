@@ -23,6 +23,9 @@ import { AuthModule } from './auth/auth.module';
         database: config.getOrThrow<string>('DB_NAME'),
         // TiDB Cloud exige conexión cifrada (TLS).
         ssl: { minVersion: 'TLSv1.2', rejectUnauthorized: true },
+                // TiDB cierra las conexiones que pasan mucho rato sin uso.
+        // Así las cerramos nosotros al minuto, antes de intentar usar una ya colgada.
+        extra: { maxIdle: 1, idleTimeout: 60000 },
         // Registra solas las entidades de cada módulo.
         autoLoadEntities: true,
         // Crea o ajusta las tablas según las entidades. Solo para desarrollo.
