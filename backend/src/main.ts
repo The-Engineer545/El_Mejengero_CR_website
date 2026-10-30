@@ -15,6 +15,7 @@ async function bootstrap() {
     .split(',')
     .map((origen) => origen.trim());
   app.enableCors({ origin: origenes });
-  await app.listen(3000);
+  // Render asigna el puerto en la variable PORT; en local se usa 3000.
+  await app.listen(process.env.PORT ?? 3000);
 }
 void bootstrap();

@@ -1,6 +1,6 @@
 // Datos y tarjetas compartidos por inicio y catálogo.
 async function cargarProductos() {
-    const respuesta = await fetch("data/productos.json");
+    const respuesta = await fetch(`${API_URL}/camisetas`);
     if (!respuesta.ok) throw new Error("No se pudo cargar el catálogo");
     productos = await respuesta.json();
     if (!Array.isArray(productos)) throw new Error("El catálogo no es una lista");
