@@ -23,6 +23,8 @@ const formMensaje = document.querySelector("#formMensaje");
 const btnGuardar = document.querySelector("#btnGuardar");
 const campoImagen = document.querySelector("#campoImagen");
 const vistaPreviaImagen = document.querySelector("#vistaPreviaImagen");
+const campoArchivoImagen = document.querySelector("#campoArchivoImagen");
+const zonaImagen = document.querySelector("#zonaImagen");
 
 const dialogoEliminar = document.querySelector("#dialogoEliminar");
 const nombreEliminar = document.querySelector("#nombreEliminar");
@@ -31,6 +33,7 @@ const btnConfirmarEliminar = document.querySelector("#btnConfirmarEliminar");
 let camisetas = [];
 let idEnEdicion = null; // null = crear; número = editar esa camiseta
 let idAEliminar = null;
+let imagenActual = ""; // Ruta, dirección o foto en base64 de la camiseta en edición.
 
 // ---------- Token (sessionStorage: se borra al cerrar la pestaña) ----------
 
@@ -279,7 +282,10 @@ function abrirFormulario(camiseta = null) {
     document.querySelector("#campoDescripcion").value = camiseta?.descripcion ?? "";
     document.querySelector("#campoPrecio").value = camiseta?.precio ?? "";
     document.querySelector("#campoCategoria").value = camiseta?.categoria ?? "Selecciones";
-    campoImagen.value = camiseta?.imagen ?? "img/productos/";
+    imagenActual = camiseta?.imagen ?? "";
+    // Si es una foto subida (base64), no se mete en el campo de texto; solo se ve en la vista previa.
+    campoImagen.value = imagenActual.startsWith("data:") ? "" : imagenActual;
+    campoArchivoImagen.value = "";
     const tallas = camiseta?.tallas ?? ["S", "M", "L", "XL"];
     document.querySelectorAll("#campoTallas input").forEach((casilla) => {
         casilla.checked = tallas.includes(casilla.value);
@@ -288,17 +294,72 @@ function abrirFormulario(camiseta = null) {
     document.querySelector("#campoPlayer").checked = camiseta ? camiseta.playerVersion : false;
     document.querySelector("#campoDestacado").checked = camiseta ? camiseta.destacado : false;
 
-    actualizarVistaPrevia();
+    vistaPreviaImagen.src = imagenActual || IMAGEN_VACIA;
     dialogoCamiseta.showModal();
     document.querySelector("#campoNombre").focus();
 }
 
-function actualizarVistaPrevia() {
-    vistaPreviaImagen.src = campoImagen.value.trim() || IMAGEN_VACIA;
+// Recibe un texto (ruta, dirección o foto en base64). Lo guarda como imagen actual
+// y actualiza la vista previa. No devuelve nada.
+function fijarImagen(valor) {
+    imagenActual = valor;
+    vistaPreviaImagen.src = valor || IMAGEN_VACIA;
 }
-campoImagen.addEventListener("input", actualizarVistaPrevia);
+
+// Al escribir una ruta o dirección, esa pasa a ser la imagen de la camiseta.
+campoImagen.addEventListener("input", () => fijarImagen(campoImagen.value.trim()));
 vistaPreviaImagen.addEventListener("error", () => {
     if (!vistaPreviaImagen.src.endsWith(IMAGEN_VACIA)) vistaPreviaImagen.src = IMAGEN_VACIA;
+});
+
+// Recibe un archivo de imagen. Lo achica a 600px, lo convierte a JPEG (base64)
+// y lo deja como foto de la camiseta. No devuelve nada; avisa si algo falla.
+function cargarArchivoImagen(archivo) {
+    if (!archivo || !archivo.type.startsWith("image/")) {
+        formMensaje.textContent = "El archivo debe ser una imagen (jpg, png...).";
+        return;
+    }
+    const lector = new FileReader();
+    lector.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+            // Reduce la foto para que no pese mucho en la base de datos.
+            const MAX = 600;
+            const escala = Math.min(1, MAX / Math.max(img.width, img.height));
+            const lienzo = document.createElement("canvas");
+            lienzo.width = Math.round(img.width * escala);
+            lienzo.height = Math.round(img.height * escala);
+            const ctx = lienzo.getContext("2d");
+            // Rellena de blanco antes de dibujar: así una PNG con fondo transparente
+            // no queda con fondo negro al convertirla a JPEG.
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, lienzo.width, lienzo.height);
+            ctx.drawImage(img, 0, 0, lienzo.width, lienzo.height);
+            fijarImagen(lienzo.toDataURL("image/jpeg", 0.8));
+            campoImagen.value = ""; // La foto subida manda; se limpia el campo de ruta.
+            formMensaje.textContent = "";
+        };
+        img.onerror = () => { formMensaje.textContent = "No se pudo leer la imagen."; };
+        img.src = lector.result;
+    };
+    lector.onerror = () => { formMensaje.textContent = "No se pudo leer el archivo."; };
+    lector.readAsDataURL(archivo);
+}
+
+// Elegir un archivo desde el explorador.
+campoArchivoImagen.addEventListener("change", () => {
+    if (campoArchivoImagen.files[0]) cargarArchivoImagen(campoArchivoImagen.files[0]);
+});
+
+// Arrastrar y soltar una foto sobre la zona.
+["dragover", "dragleave", "drop"].forEach((evento) => {
+    zonaImagen.addEventListener(evento, (e) => e.preventDefault());
+});
+zonaImagen.addEventListener("dragover", () => zonaImagen.classList.add("border-black"));
+zonaImagen.addEventListener("dragleave", () => zonaImagen.classList.remove("border-black"));
+zonaImagen.addEventListener("drop", (e) => {
+    zonaImagen.classList.remove("border-black");
+    if (e.dataTransfer.files[0]) cargarArchivoImagen(e.dataTransfer.files[0]);
 });
 
 // Sin entradas. Devuelve los datos del formulario o un texto de error.
@@ -308,7 +369,7 @@ function leerFormulario() {
         descripcion: document.querySelector("#campoDescripcion").value.trim(),
         precio: Number(document.querySelector("#campoPrecio").value),
         categoria: document.querySelector("#campoCategoria").value,
-        imagen: campoImagen.value.trim(),
+        imagen: imagenActual,
         tallas: [...document.querySelectorAll("#campoTallas input:checked")].map((c) => c.value),
         disponible: document.querySelector("#campoDisponible").checked,
         playerVersion: document.querySelector("#campoPlayer").checked,
@@ -319,7 +380,7 @@ function leerFormulario() {
     if (datos.nombre.length < 2) return { error: "El nombre debe tener al menos 2 caracteres." };
     if (datos.descripcion.length < 2) return { error: "La descripción debe tener al menos 2 caracteres." };
     if (!Number.isInteger(datos.precio) || datos.precio <= 0) return { error: "El precio debe ser un número entero mayor que 0." };
-    if (datos.imagen.length < 2) return { error: "Escribí la ruta de la imagen." };
+    if (datos.imagen.length < 2) return { error: "Agregá una imagen: subí una foto o escribí una ruta." };
     return { datos };
 }
 

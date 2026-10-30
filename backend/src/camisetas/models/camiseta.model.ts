@@ -26,7 +26,9 @@ export class Camiseta {
   @Column({ length: 50 })
   categoria: string;
 
-  @Column({ length: 255 })
+  // Texto largo: guarda una ruta corta (img/productos/x.jpg) o una foto
+  // subida desde el panel, que se almacena como texto base64 (mucho más largo).
+  @Column('mediumtext')
   imagen: string;
 
   // Guarda el arreglo como texto JSON, por ejemplo ["S","M","L"].
